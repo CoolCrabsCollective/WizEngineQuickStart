@@ -10,10 +10,11 @@ set(CMAKE_CXX_STANDARD 17)
 include(FetchContent)
 FetchContent_Declare(
         sfml
-        URL https://github.com/TomBebb/SFML-switch/archive/46dfeda83459649a145c6eb6a0a79b19d0a35305.zip
+        URL https://github.com/SFML/SFML/archive/ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958.zip
 )
 FetchContent_MakeAvailable(sfml)
 
+set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL)
 #find_package(SFML 2 REQUIRED COMPONENTS audio graphics window system)
 find_package(Threads REQUIRED)

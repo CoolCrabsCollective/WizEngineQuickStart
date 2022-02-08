@@ -46,7 +46,7 @@ extern int main()
     sprite.setTexture(texture);
 
     sf::CircleShape circle(40.f);
-    circle.setPosition(100., -100.);
+    circle.setPosition(sf::Vector2f(100., -100.));
 
     // set the shape color to green
     circle.setFillColor(sf::Color::Magenta);
@@ -69,21 +69,28 @@ extern int main()
         sf::Vector2f spritePos = sprite.getPosition();
         sf::Vector2f msgPos = message.getPosition();
 
-        if (sf::Touch::isDown(1))
+        if(sf::Touch::isDown(1) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
         {
             music.play();
-        } else if (sf::Touch::isDown(2))
+        }
+		else if(sf::Touch::isDown(2) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
         {
             music.pause();
         }
 
-        if (sf::Touch::isDown(0))
+		if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			auto mousePos = sf::Mouse::getPosition();
+			spritePos.x = (float) mousePos.x;
+			spritePos.y = (float) mousePos.y;
+		}
+        else if(sf::Touch::isDown(0))
         {
             auto touchPos = sf::Touch::getPosition(0);
             spritePos.x = (float) touchPos.x;
             spritePos.y = (float) touchPos.y;
-
-        } else
+        }
+		else
         {
             spritePos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
             spritePos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
