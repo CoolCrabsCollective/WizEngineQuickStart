@@ -1,16 +1,22 @@
 cmake_minimum_required(VERSION 3.7)
 project(GameTemplate)
 
-
-find_package(OpenGL)
-find_package(SFML 2 REQUIRED COMPONENTS audio graphics window system)
-find_package(Threads REQUIRED)
-
 if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-Wall -ansi -Wno-deprecated -pthread)
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
+
+include(FetchContent)
+FetchContent_Declare(
+        sfml
+        URL https://github.com/TomBebb/SFML-switch/archive/46dfeda83459649a145c6eb6a0a79b19d0a35305.zip
+)
+FetchContent_MakeAvailable(sfml)
+
+find_package(OpenGL)
+#find_package(SFML 2 REQUIRED COMPONENTS audio graphics window system)
+find_package(Threads REQUIRED)
 
 include_directories(include)
 file(GLOB SOURCE_FILES
