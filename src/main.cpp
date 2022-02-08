@@ -24,9 +24,9 @@ extern int main()
         return -1;
 
     sf::Font font;
-    if (!font.loadFromFile(asset("sans.ttf")))
+    if(!font.loadFromFile(asset("sans.ttf")))
     {
-        printf("Font not loaded\r\n");
+        std::cout << "Font not loaded" << std::endl;
         return EXIT_FAILURE;
     }
 
@@ -40,18 +40,18 @@ extern int main()
 
     sf::Text message("Welcome to SFML valley.", font);
 
-    sf::RenderWindow window(mode, "Hello World SFML Window");
+    sf::RenderWindow window(mode, "SFML Game Template Project");
     sf::Clock deltaClock;
 
-    printf("Loading textures\n");
+	std::cout << "Loading textures" << std::endl;
     sf::Texture playerTex;
-    if(!playerTex.loadFromFile(asset("player.png"))) {
-        printf("Texture failed to load\n");
+	if(!playerTex.loadFromFile(asset("player.png"))) {
+		std::cout << "Texture failed to load" << std::endl;
         return EXIT_FAILURE;
     }
 	sf::Texture backgroundTex;
 	if(!backgroundTex.loadFromFile(asset("background.jpg"))) {
-		printf("Texture failed to load\n");
+		std::cout << "Texture failed to load" << std::endl;
 		return EXIT_FAILURE;
 	}
     sf::Sprite player;
