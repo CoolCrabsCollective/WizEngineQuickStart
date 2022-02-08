@@ -16,7 +16,6 @@ FetchContent_MakeAvailable(sfml)
 
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL)
-#find_package(SFML 2 REQUIRED COMPONENTS audio graphics window system)
 find_package(Threads REQUIRED)
 
 include_directories(include)

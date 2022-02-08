@@ -1,5 +1,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "asset_resolver.h"
 
@@ -58,6 +59,12 @@ extern int main()
         while (window.pollEvent(e)) {
             printf("Event: %u\n", e.type);
         }
+
+		if(e.type == sf::Event::EventType::Closed) {
+			std::cout << "Good bye!" << std::endl;
+			window.close();
+			break;
+		}
 
         window.clear();
         
