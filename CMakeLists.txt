@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 project(GameTemplate)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
-    add_definitions(-Wall -ansi -Wno-deprecated -pthread)
+    add_definitions(-Wall -ansi -Wno-deprecated -pthread -Wpedantic)
 endif()
 
 set(CMAKE_CXX_STANDARD 17)

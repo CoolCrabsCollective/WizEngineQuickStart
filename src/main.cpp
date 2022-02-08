@@ -30,60 +30,92 @@ extern int main()
         return EXIT_FAILURE;
     }
 
-    sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+    sf::VideoMode mode;
 
-    sf::Text message("Hello, world!", font);
+#ifdef SWITCH
+	mode = sf::VideoMode::getDesktopMode();
+#else
+	mode = sf::VideoMode(640, 480, 32);
+#endif
+
+    sf::Text message("Welcome to SFML valley.", font);
 
     sf::RenderWindow window(mode, "Hello World SFML Window");
     sf::Clock deltaClock;
 
-    printf("Loading texture\n");
-    sf::Texture texture;
-    if (!texture.loadFromFile(asset("example.png"))) {
+    printf("Loading textures\n");
+    sf::Texture playerTex;
+    if(!playerTex.loadFromFile(asset("player.png"))) {
         printf("Texture failed to load\n");
         return EXIT_FAILURE;
     }
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
+	sf::Texture backgroundTex;
+	if(!backgroundTex.loadFromFile(asset("background.jpg"))) {
+		printf("Texture failed to load\n");
+		return EXIT_FAILURE;
+	}
+    sf::Sprite player;
+    player.setTexture(playerTex);
+	sf::Sprite background;
+	background.setTexture(backgroundTex);
 
     sf::CircleShape circle(40.f);
     circle.setPosition(sf::Vector2f(100., -100.));
 
-    // set the shape color to green
     circle.setFillColor(sf::Color::Magenta);
 
     float speed = 0.02f;
 
+	bool wasPlayPressed = false;
+	bool wasStopPressed = false;
+
     while (window.isOpen()) {
         sf::Event e;
         while (window.pollEvent(e)) {
-            printf("Event: %u\n", e.type);
+	        if(e.type == sf::Event::EventType::Closed) {
+		        std::cout << "Good bye!" << std::endl;
+		        window.close();
+		        break;
+	        }
         }
 
-		if(e.type == sf::Event::EventType::Closed) {
-			std::cout << "Good bye!" << std::endl;
-			window.close();
+		if(!window.isOpen())
 			break;
-		}
 
         window.clear();
-        
+
+	    sf::Vector2f vec = sf::Vector2f(window.getView().getSize());
+		vec.x /= static_cast<float>(background.getTextureRect().getSize().x);
+		vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
+
+	    background.setScale(vec);
+        window.draw(background);
         window.draw(message);
-        window.draw(sprite);
+	    player.setScale(sf::Vector2f(0.25f, 0.25f));
+        window.draw(player);
+		window.draw(circle);
         sf::Time dtTime = deltaClock.restart();
         float dt = dtTime.asSeconds();
 
-        sf::Vector2f spritePos = sprite.getPosition();
+        sf::Vector2f spritePos = player.getPosition();
         sf::Vector2f msgPos = message.getPosition();
 
-        if(sf::Touch::isDown(1) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
+		bool playPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P);
+		bool stopPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S);
+
+        if(sf::Touch::isDown(1) || (playPressed && !wasPlayPressed))
         {
             music.play();
+			std::cout << "Playing music!" << std::endl;
         }
-		else if(sf::Touch::isDown(2) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+		else if(sf::Touch::isDown(2) || (stopPressed && !wasStopPressed))
         {
             music.pause();
+	        std::cout << "Stopping music!" << std::endl;
         }
+
+	    wasPlayPressed = playPressed;
+		wasStopPressed = stopPressed;
 
 		if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
@@ -105,7 +137,7 @@ extern int main()
             msgPos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V);
         }
 
-        sprite.setPosition(spritePos);
+        player.setPosition(spritePos);
         message.setPosition(msgPos);
 
         window.display();
