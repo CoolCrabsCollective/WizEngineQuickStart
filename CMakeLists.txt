@@ -15,7 +15,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     add_compile_definitions(OS_MAC) # applies C++ macro
 elseif(UNIX)
     # static linking of libraries on linux
-    set(CMAKE_CXX_STANDARD_LIBRARIES "--static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")
     #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,-lpthread -lc")
     add_compile_definitions(OS_UNIX) # applies C++ macro
 endif()
