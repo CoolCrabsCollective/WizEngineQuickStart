@@ -20,8 +20,16 @@ extern int main()
 
 	sf::Music music;
 
-	if(!music.openFromFile(asset("sample.wav")))
+	if(!music.openFromFile(asset("greenlife.ogg")))
 		return -1;
+
+	sf::SoundBuffer buffer;
+
+	if(!buffer.loadFromFile(asset("jump.ogg")))
+		return -1;
+
+	sf::Sound sound;
+	sound.setBuffer(buffer);
 
 	music.setVolume(100.0f);
 
@@ -126,12 +134,14 @@ extern int main()
 			auto mousePos = sf::Mouse::getPosition(window);
 			spritePos.x = (float) mousePos.x;
 			spritePos.y = (float) mousePos.y;
+			sound.play();
 		}
 		else if(sf::Touch::isDown(0))
 		{
 			auto touchPos = sf::Touch::getPosition(0);
 			spritePos.x = (float) touchPos.x;
 			spritePos.y = (float) touchPos.y;
+			sound.play();
 		}
 		else
 		{
