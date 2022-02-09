@@ -30,6 +30,10 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(sfml)
 
+# this creates the variables SFML_SOURCE_DIR, SFML_BINARY_DIR and SFML_POPULATED
+# then SFML_SOURCE_DIR is used below to include the header files
+FetchContent_GetProperties(SFML)
+
 # Other dependencies
 
 set(OpenGL_GL_PREFERENCE GLVND)
@@ -37,7 +41,8 @@ find_package(OpenGL)
 find_package(Threads REQUIRED)
 
 # include and source files
-include_directories(include)
+include_directories(include ${SFML_SOURCE_DIR}/include)
+
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp
         ${PROJECT_SOURCE_DIR}/include/*.h

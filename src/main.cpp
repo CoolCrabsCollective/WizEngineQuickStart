@@ -30,7 +30,7 @@ extern int main()
 #endif
 
 #ifdef OS_UNIX
-    std::cout << "OS is Windows" << std::endl;
+    std::cout << "OS is Unix" << std::endl;
 #endif
 
 	sf::Music music;
