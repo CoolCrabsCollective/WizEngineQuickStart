@@ -5,7 +5,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-Wall -ansi -Wno-deprecated -pthread -Wpedantic)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -35,3 +36,17 @@ target_link_libraries(${PROJECT_NAME} sfml-system sfml-window sfml-graphics sfml
 if (UNIX)
     target_link_libraries(${PROJECT_NAME} pthread)
 endif (UNIX)
+
+#
+# Deletes the old res folder and copies the latest one
+# NOTE: Cmake doesn't refresh the res folder unless there are compilation changes
+# ideally it would when there are file changes in res but I don't know how to
+# achieve that
+#
+add_custom_command(TARGET GameTemplate PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove_directory
+        $<TARGET_FILE_DIR:GameTemplate>/res)
+
+add_custom_command(TARGET GameTemplate POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${PROJECT_SOURCE_DIR}/res $<TARGET_FILE_DIR:GameTemplate>/res)
