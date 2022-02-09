@@ -1,21 +1,36 @@
+#include "os_finder.h"
+
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 #include "asset_resolver.h"
 
-#ifdef SWITCH
+#ifdef OS_SWITCH
 	#include <switch.h>
 #endif
 
 extern int main()
 {
-#ifdef SWITCH
+#ifdef OS_SWITCH
+    std::cout << "OS is Switch" << std::endl;
 	// Setup NXLink
 	socketInitializeDefault();
 	nxlinkStdio();
 
 	Result rc = romfsInit();
+#endif
+
+#ifdef OS_WINDOWS
+    std::cout << "OS is Windows" << std::endl;
+#endif
+
+#ifdef OS_MAC
+    std::cout << "OS is Windows" << std::endl;
+#endif
+
+#ifdef OS_UNIX
+    std::cout << "OS is Windows" << std::endl;
 #endif
 
 	sf::Music music;
@@ -42,7 +57,7 @@ extern int main()
 
 	sf::VideoMode mode;
 
-#ifdef SWITCH
+#ifdef OS_SWITCH
 	mode = sf::VideoMode::getDesktopMode();
 #else
 	mode = sf::VideoMode(640, 480, 32);
@@ -157,7 +172,7 @@ extern int main()
 		window.display();
 	}
 
-#ifdef SWITCH
+#ifdef OS_SWITCH
 	socketExit();
 #endif
 	return EXIT_SUCCESS;

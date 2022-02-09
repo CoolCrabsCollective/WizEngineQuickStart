@@ -2,7 +2,7 @@
 // Created by Alexander Winter on 2022-02-07.
 //
 
-#ifdef SWITCH
+#ifdef OS_SWITCH
 
 #include "asset_resolver.h"
 
