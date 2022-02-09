@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.7)
 project(GameTemplate)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     add_definitions(-Wall -ansi -Wno-deprecated -pthread -Wpedantic)
+endif()
+
+if(WIN32)
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -lwsock32 -lws2_32 ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,--whole-archive -lpthread -Wl,--no-whole-archive")
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
@@ -50,3 +55,18 @@ add_custom_command(TARGET GameTemplate PRE_BUILD
 add_custom_command(TARGET GameTemplate POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${PROJECT_SOURCE_DIR}/res $<TARGET_FILE_DIR:GameTemplate>/res)
+
+
+# Copy openal32.dll for windows
+
+if(WIN32)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        add_custom_command(TARGET GameTemplate POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${PROJECT_SOURCE_DIR}/cmake-build-debug/_deps/sfml-src/extlibs/bin/x64 $<TARGET_FILE_DIR:GameTemplate>)
+    else()
+        add_custom_command(TARGET GameTemplate POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${PROJECT_SOURCE_DIR}/cmake-build-debug/_deps/sfml-src/extlibs/bin/x86 $<TARGET_FILE_DIR:GameTemplate>)
+    endif()
+endif()
