@@ -26,7 +26,7 @@ extern int main()
 #endif
 
 #ifdef OS_MAC
-    std::cout << "OS is Windows" << std::endl;
+    std::cout << "OS is Mac" << std::endl;
 #endif
 
 #ifdef OS_UNIX
