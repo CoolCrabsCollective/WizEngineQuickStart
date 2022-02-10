@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_S
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,-lpthread -lc")
 add_compile_definitions(OS_UNIX) # applies C++ macro
 
-# Note: os_finder.h ensures OS_SWITCH is defined when no other OS is defined
-
 
 #
 # Set C++ version
@@ -54,17 +52,3 @@ add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCE_FILES})
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} sfml-system sfml-window sfml-graphics sfml-audio sfml-network pthread)
-
-#
-# Deletes the old res folder and copies the latest one
-# NOTE: Cmake doesn't refresh the res folder unless there are compilation changes
-# ideally it would when there are file changes in res but I don't know how to
-# achieve that
-#
-# add_custom_command(TARGET ${CMAKE_PROJECT_NAME} PRE_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E remove_directory
-#         $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/res)
-
-# add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_directory
-#         ${PROJECT_SOURCE_DIR}/res $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/res)

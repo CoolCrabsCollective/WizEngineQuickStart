@@ -5,16 +5,38 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 #include <iostream>
-#include <stdint.h>
+#include <cstdint>
 
 #include "asset_resolver.h"
+#include "test_subdir/test_subdir.h"
 
 #ifdef OS_SWITCH
 	#include <switch.h>
 #endif
 
-extern int main()
+int main(int argc, char* argv[])
 {
+#ifdef OS_SWITCH
+    // with Yuzu, files are in ~/.local/share/yuzu/sdmc
+
+    FILE* stdoutFile = fopen("stdout.txt", "a");
+    FILE* stderrFile = fopen("stderr.txt", "a");
+
+    dup2(fileno(stdoutFile), STDOUT_FILENO);
+    dup2(fileno(stderrFile), STDERR_FILENO);
+
+    fclose(stdoutFile);
+    fclose(stderrFile);
+#endif
+
+    auto now = std::chrono::system_clock::now();
+    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+    auto epoch = now_ms.time_since_epoch();
+    auto value = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
+    long duration = value.count();
+
+    std::cout << "[" << duration << "] Launching app " << std::endl;
+
 #ifdef OS_SWITCH
     std::cout << "OS is Switch" << std::endl;
 	// Setup NXLink
@@ -35,17 +57,22 @@ extern int main()
 #ifdef OS_UNIX
     std::cout << "OS is Unix" << std::endl;
 #endif
+    testFunction();
 
 #ifndef OS_SWITCH
 	sf::Music music;
 
-	if(!music.openFromFile(asset("greenlife.ogg")))
-		return -1;
+	if(!music.openFromFile(asset("greenlife.ogg"))) {
+        std::cerr << "Failed to load music greenlife.ogg" << std::endl;
+        return -1;
+    }
 
 	sf::SoundBuffer buffer;
 
-	if(!buffer.loadFromFile(asset("jump.ogg")))
-		return -1;
+	if(!buffer.loadFromFile(asset("jump.ogg"))) {
+        std::cerr << "Failed to load sound jump.ogg" << std::endl;
+        return -1;
+    }
 
 	sf::Sound sound;
 	sound.setBuffer(buffer);
@@ -102,6 +129,7 @@ extern int main()
 	bool wasPlayPressed = false;
 	bool wasStopPressed = false;
 
+#ifndef OS_SWITCH
 	std::string ip("192.168.0.5");
 	uint16_t port = 2020;
 	sf::Time delay = sf::seconds(1.0f);
@@ -109,10 +137,11 @@ extern int main()
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(ip, port, delay);
 
-	if (status != sf::Socket::Done)
-	{
+	if (status != sf::Socket::Done) {
 		std::cout << "FUCK!!! NETWORK NOT FOUND !! BOOT UP THE SERVER !!!!" << std::endl;
 	}
+#endif
+
 	while (window.isOpen()) {
 		sf::Event e;
 		while (window.pollEvent(e)) {
@@ -167,19 +196,19 @@ extern int main()
 
 		if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
+#ifndef OS_SWITCH
 			auto mousePos = sf::Mouse::getPosition(window);
 			spritePos.x = (float) mousePos.x;
 			spritePos.y = (float) mousePos.y;
-#ifndef OS_SWITCH
 			sound.play();
 #endif
 		}
 		else if(sf::Touch::isDown(0))
 		{
+#ifndef OS_SWITCH
 			auto touchPos = sf::Touch::getPosition(0);
 			spritePos.x = (float) touchPos.x;
 			spritePos.y = (float) touchPos.y;
-#ifndef OS_SWITCH
 			sound.play();
 #endif
 		}
