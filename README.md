@@ -22,10 +22,13 @@ For Ubuntu:
 ### Install specific libraries for switch development
 `sudo dkp-pacman -S switch-sdl2 switch-sdl2_mixer switch-glad switch-bzip2 switch-zlib switch-mesa switch-libpng switch-libogg switch-flac switch-glm switch-sdl2_image switch-sdl2_ttf switch-libvorbis switch-openal-soft`
 
-If library is custom and thus not found using pacman, copy .a files to $DEVKITPRO/portlibs/switch/lib
+If library is custom and thus not found using pacman, copy .a files to `$DEVKITPRO/portlibs/switch/lib`
 
-### Installing switch-sfml
-Run the installation bash script in the fork repo after building following the instructions in the readme on there
+### Installing SFML-switch
+Build via the instructions in the readme on my fork of [SFML-switch](https://github.com/RealWilliamWells/SFML-switch) then run the installation bash script
+
+### Installing mojoAL-switch
+Go [here](https://github.com/TomBebb/mojoAL-switch/releases/tag/latest) for the latest release and copy the .a file to `$DEVKITPRO/portlibs/switch/lib`
 
 ### Launch homebrew with debug printing for hardware testing
 * `/opt/devkitpro/tools/bin/nxlink -s path/to/homebrew.nro`
