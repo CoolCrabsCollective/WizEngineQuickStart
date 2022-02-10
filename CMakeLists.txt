@@ -22,8 +22,40 @@ endif()
 
 # Note: os_finder.h ensures OS_SWITCH is defined when no other OS is defined
 
+
+#
+# Set C++ version
+#
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+
+
+#
+# The following if-else chain makes the different platform output at different
+# paths:
+#
+# out/
+#   windows64/
+#   windows32/
+#   mac/
+#   linux64/
+#   linux32/
+#   switch/ (handled by Makefile)
+#
+if(WIN32)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/windows64/)
+    else()
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/windows32/)
+    endif()
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/mac/)
+elseif(UNIX)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux64/)
+    else()
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux32/)
+    endif()
+endif()
 
 # Fetches SFML dependency and loads its CMakeLists.txt
 include(FetchContent)

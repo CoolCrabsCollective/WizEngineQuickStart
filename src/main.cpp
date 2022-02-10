@@ -33,6 +33,7 @@ extern int main()
     std::cout << "OS is Unix" << std::endl;
 #endif
 
+#ifndef OS_SWITCH
 	sf::Music music;
 
 	if(!music.openFromFile(asset("greenlife.ogg")))
@@ -47,6 +48,7 @@ extern int main()
 	sound.setBuffer(buffer);
 
 	music.setVolume(100.0f);
+#endif
 
 	sf::Font font;
 	if(!font.loadFromFile(asset("sans.ttf")))
@@ -86,11 +88,12 @@ extern int main()
 	sf::Sprite background;
 	background.setTexture(backgroundTex);
 
+#ifndef OS_SWITCH
 	sf::CircleShape circle(40.f);
 	circle.setPosition(sf::Vector2f(100., 100.));
 
 	circle.setFillColor(sf::Color::Yellow);
-
+#endif
 	float speed = 0.02f;
 
 	bool wasPlayPressed = false;
@@ -120,7 +123,9 @@ extern int main()
 		window.draw(message);
 		player.setScale(sf::Vector2f(0.25f, 0.25f));
 		window.draw(player);
+#ifndef OS_SWITCH
 		window.draw(circle);
+#endif
 		sf::Time dtTime = deltaClock.restart();
 		float dt = dtTime.asSeconds();
 
@@ -130,6 +135,7 @@ extern int main()
 		bool playPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P);
 		bool stopPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S);
 
+#ifndef OS_SWITCH
 		if(sf::Touch::isDown(1) || (playPressed && !wasPlayPressed))
 		{
 			music.play();
@@ -140,6 +146,7 @@ extern int main()
 			music.pause();
 			std::cout << "Stopping music!" << std::endl;
 		}
+#endif
 
 		wasPlayPressed = playPressed;
 		wasStopPressed = stopPressed;
@@ -149,21 +156,27 @@ extern int main()
 			auto mousePos = sf::Mouse::getPosition(window);
 			spritePos.x = (float) mousePos.x;
 			spritePos.y = (float) mousePos.y;
+#ifndef OS_SWITCH
 			sound.play();
+#endif
 		}
 		else if(sf::Touch::isDown(0))
 		{
 			auto touchPos = sf::Touch::getPosition(0);
 			spritePos.x = (float) touchPos.x;
 			spritePos.y = (float) touchPos.y;
+#ifndef OS_SWITCH
 			sound.play();
+#endif
 		}
 		else
 		{
+#ifndef OS_SWITCH
 			spritePos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
 			spritePos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
 			msgPos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U);
 			msgPos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V);
+#endif
 		}
 
 		player.setPosition(spritePos);

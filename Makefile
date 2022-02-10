@@ -42,13 +42,25 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   of a homebrew executable (.nro). This is intended to be used for sysmodules.
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
-BUILD		:=	build
-SOURCES		:=	src
+
+
+# nice output path that is consistent with what CMake does
+TARGET		:=	out/switch/$(notdir $(CURDIR))
+
+# unique folder to avoid conflicting with cmake
+BUILD		:=	build-switch
+
+# add more depth as needed
+SOURCES		:=	src $(wildcard src/*) $(wildcard src/*/*) $(wildcard src/*/*/*) $(wildcard src/*/*/*/*)
+
+# honestly I don't know what DATA is for
 DATA		:=	data
+
+# include
 INCLUDES	:=	include
+
+# our asset/resource folder
 ROMFS   	:=	res
-#ROMFS	:=	romfs
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -93,6 +105,14 @@ export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
 			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
+
+
+# This attempts to make every source file name unique and thus prevents dupps but fails
+
+#CFILES		:=	$(foreach dir,$(SOURCES),$(subst src_,,$(subst /,_,$(wildcard $(dir)/*.c))))
+#CPPFILES	:=	$(foreach dir,$(SOURCES),$(subst src_,,$(subst /,_,$(wildcard $(dir)/*.cpp))))
+
+# This solution works for nested dirs but will fail when 2 .cpp files are named the same
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
@@ -172,8 +192,9 @@ endif
 all: $(BUILD)
 
 $(BUILD):
-	@[ -d $@ ] || mkdir -p $@
+	@[ -d $@ ] || mkdir -p $@ | mkdir -p out/switch | mkdir -p out
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	$(info $$var is [${OFILES}])
 
 #---------------------------------------------------------------------------------
 clean:
