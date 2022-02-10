@@ -54,7 +54,7 @@ jobs:
       run: cmake -B build -S client
 
     - name: CMake build
-      run: cmake --build build -S client
+      run: cmake --build build
 
     - name: CMake self-tests
       run: ctest --test-dir build --output-on-failure
