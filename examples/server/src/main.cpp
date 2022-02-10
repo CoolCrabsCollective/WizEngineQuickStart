@@ -1,25 +1,22 @@
-#include <SFML/Graphics.hpp>    
+#include <SFML/Network.hpp>    
     
 int main()    
 {    
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");    
-    sf::CircleShape shape(100.f);    
-    shape.setFillColor(sf::Color::Green);    
-    
-    while (window.isOpen())    
-    {    
-        sf::Event event;    
-        while (window.pollEvent(event))    
-        {    
-            if (event.type == sf::Event::Closed)    
-                window.close();    
-        }    
-    
-        window.clear();    
-        window.draw(shape);    
-        window.display();    
-    }    
-    
+    sf::TcpListener listener;
+
+    // bind the listener to a port
+    if (listener.listen(2020) != sf::Socket::Done)
+    {
+        // error...
+    }
+
+    // accept a new connection
+    sf::TcpSocket client;
+    if (listener.accept(client) != sf::Socket::Done)
+    {
+        // error...
+    }
+
     return 0;    
 }    
 

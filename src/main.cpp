@@ -2,6 +2,7 @@
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 #include <iostream>
 
 #include "asset_resolver.h"
@@ -99,6 +100,12 @@ extern int main()
 	bool wasPlayPressed = false;
 	bool wasStopPressed = false;
 
+	sf::TcpSocket socket;
+	sf::Socket::Status status = socket.connect("192.168.0.5", 2020);
+	if (status != sf::Socket::Done)
+	{
+		std::cout << "FUCK!!! NETWORK NOT FOUND !! BOOT UP THE SERVER !!!!" << std::endl;
+	}
 	while (window.isOpen()) {
 		sf::Event e;
 		while (window.pollEvent(e)) {

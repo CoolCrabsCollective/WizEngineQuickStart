@@ -89,7 +89,7 @@ file(GLOB SOURCE_FILES
 add_library(GameTemplate_lib ${SOURCE_FILES})
 add_executable(GameTemplate ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} sfml-system sfml-window sfml-graphics sfml-audio)
+target_link_libraries(${PROJECT_NAME} sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 
 if (UNIX)
     target_link_libraries(${PROJECT_NAME} pthread)
