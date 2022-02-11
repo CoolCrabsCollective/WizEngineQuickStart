@@ -78,6 +78,8 @@ cd ..
 ./install-built-library.sh
 ```
 
+This completes the installation setup.
+
 #### Launch homebrew with debug printing for hardware testing
 * `/opt/devkitpro/tools/bin/nxlink -s path/to/homebrew.nro`
 
@@ -88,4 +90,4 @@ cd client
 make
 ```
 
-This will produce an .nro file in the folder `client/out/switch/` you can then copy onto your switch.
+This will produce an .nro file in the folder `client/out/switch/` you can then copy onto your switch open with (Yuzu)[!https://yuzu-emu.org/].
