@@ -75,7 +75,7 @@ FetchContent_GetProperties(SFML)
 
 FetchContent_Declare(
         WizEngine
-	    URL https://github.com/WinterAlexander/WizEngine/archive/ddbc5909abdcdd44ad42986f637f666755e3919e.zip
+	    URL https://github.com/WheezyWiseWizards/WizEngine/archive/d8a9aa940077c503f9212752ed48cba0264ac0ad.zip
 )
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)
