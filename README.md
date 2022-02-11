@@ -1,7 +1,7 @@
 # WizEngineQuickStart
 This project is meant to be a ready to run WizEngine template project for Windows, Linux and Switch. You can clone or fork this repo and start making your game. All dependencies (SFML, WizEngine) are handled by the project.
 
-# Running the client
+# Deploying the client
 
 ## Desktop
 
@@ -93,3 +93,8 @@ make
 ### Executing
 
 Use the produced .nro file in the folder `client/out/switch/` to run onto your switch or open with [Yuzu](https://yuzu-emu.org/).
+
+
+# Deploying the server
+
+TODO
