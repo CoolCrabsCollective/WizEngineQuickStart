@@ -3,11 +3,12 @@
 //
 
 #include <iostream>
+#include <logging/Logger.h>
 
 #ifdef OS_SWITCH
 #include <switch.h>
 #endif
 
-void testFunction() {
-    std::cout << "Testing sub directories" << std::endl;
+void testFunction(const Logger& logger) {
+    logger.info("Testing sub directories");
 }

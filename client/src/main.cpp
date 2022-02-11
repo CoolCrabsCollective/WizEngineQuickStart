@@ -11,8 +11,8 @@
 #include <logging/DateTimeLoggerWrapper.h>
 #include <logging/TagLoggerWrapper.h>
 
-//#include "asset_resolver.h"
-//#include "test_subdir/test_subdir.h"
+#include "asset_resolver.h"
+#include "test_subdir/test_subdir.h"
 
 #include "logging/DailyFileLogger.h"
 
@@ -20,29 +20,8 @@
 	#include <switch.h>
 #endif
 
-std::string asset(const char* path) {
-#ifdef OS_SWITCH
-    return "romfs:/" + std::string(path);
-#else
-    return "res/" + std::string(path);
-#endif
-}
-
 int main(int argc, char* argv[])
 {
-#ifdef OS_SWITCH
-    // with Yuzu, files are in ~/.local/share/yuzu/sdmc
-
-    FILE* stdoutFile = fopen("stdout.txt", "a");
-    FILE* stderrFile = fopen("stderr.txt", "a");
-
-    dup2(fileno(stdoutFile), STDOUT_FILENO);
-    dup2(fileno(stderrFile), STDERR_FILENO);
-
-    fclose(stdoutFile);
-    fclose(stderrFile);
-#endif
-
     std::unique_ptr<Logger> logger = std::unique_ptr<Logger>(new TagLoggerWrapper(
             new DateTimeLoggerWrapper(
                 new MultiLogger({
@@ -70,7 +49,7 @@ int main(int argc, char* argv[])
 #ifdef OS_UNIX
     logger->info("OS is Unix");
 #endif
-    //testFunction();
+    testFunction(*logger);
 
 #ifndef OS_SWITCH
 	sf::Music music;
@@ -93,12 +72,12 @@ int main(int argc, char* argv[])
 	music.setVolume(100.0f);
 #endif
 
-	sf::Font font;
-	if(!font.loadFromFile(asset("sans.ttf")))
-	{
-        logger->error("Failed to load font sans.tff");
-		return EXIT_FAILURE;
-	}
+	//sf::Font font;
+	//if(!font.loadFromFile(asset("sans.ttf")))
+	//{
+    //    logger->error("Failed to load font sans.tff");
+	//	return EXIT_FAILURE;
+	//}
 
 	sf::VideoMode mode;
 
@@ -108,7 +87,7 @@ int main(int argc, char* argv[])
 	mode = sf::VideoMode(640, 480, 32);
 #endif
 
-	sf::Text message("Welcome to SFML valley.", font);
+	//sf::Text message("Welcome to SFML valley.", font);
 
 	sf::RenderWindow window(mode, "SFML Game Template Project");
 	sf::Clock deltaClock;
@@ -176,7 +155,7 @@ int main(int argc, char* argv[])
 
 		background.setScale(vec);
 		window.draw(background);
-		window.draw(message);
+		//window.draw(message);
 		player.setScale(sf::Vector2f(0.25f, 0.25f));
 		window.draw(player);
 #ifndef OS_SWITCH
@@ -186,7 +165,7 @@ int main(int argc, char* argv[])
 		float dt = dtTime.asSeconds();
 
 		sf::Vector2f spritePos = player.getPosition();
-		sf::Vector2f msgPos = message.getPosition();
+		//sf::Vector2f msgPos = message.getPosition();
 
 		bool playPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P);
 		bool stopPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S);
@@ -230,13 +209,13 @@ int main(int argc, char* argv[])
 #ifndef OS_SWITCH
 			spritePos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
 			spritePos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
-			msgPos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U);
-			msgPos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V);
+			//msgPos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U);
+			//msgPos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V);
 #endif
 		}
 
 		player.setPosition(spritePos);
-		message.setPosition(msgPos);
+		//message.setPosition(msgPos);
 
 		window.display();
 	}

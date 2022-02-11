@@ -5,6 +5,8 @@
 #ifndef GAMETEMPLATE_TEST_SUBDIR_H
 #define GAMETEMPLATE_TEST_SUBDIR_H
 
-void testFunction();
+#include <logging/Logger.h>
+
+void testFunction(const Logger& logger);
 
 #endif //GAMETEMPLATE_TEST_SUBDIR_H

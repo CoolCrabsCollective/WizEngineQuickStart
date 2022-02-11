@@ -45,7 +45,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 
 
 # nice output path that is consistent with what CMake does
-TARGET		:=	out/switch/$(notdir $(CURDIR))
+TARGET		:=	out/switch/GameTemplate
 
 # unique folder to avoid conflicting with cmake
 BUILD		:=	build-switch
