@@ -77,11 +77,11 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s \
+LIBS	:= 	-lsfml-window -lsfml-graphics -lsfml-audio -lsfml-system \
 		-lFLAC -lvorbisfile \
-		-lvorbisenc -lvorbis -logg -lsfml-system-s -lSDL2 -lEGL -lglapi -lGLESv2 -lglad \
+		-lvorbisenc -lvorbis -logg -lSDL2 -lEGL -lglapi -lGLESv2 -lglad \
 		-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
-		 -lmojoal -lSDL2 -lnx -lWizEngineCore_lib
+		 -lmojoal -lSDL2 -lnx -lWizEngine
 
 
 #---------------------------------------------------------------------------------
