@@ -18,6 +18,8 @@ elseif(UNIX)
     set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")
     #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,-lpthread -lc")
     add_compile_definitions(OS_UNIX) # applies C++ macro
+elseif(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
+    add_compile_definitions(OS_SWITCH) # applies C++ macro
 endif()
 
 # Note: os_finder.h ensures OS_SWITCH is defined when no other OS is defined
@@ -58,10 +60,17 @@ endif()
 
 # Fetches SFML dependency and loads its CMakeLists.txt
 include(FetchContent)
-FetchContent_Declare(
-        sfml
-        URL https://github.com/SFML/SFML/archive/ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958.zip
-)
+if(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
+    FetchContent_Declare(
+            sfml
+            URL https://github.com/WinterAlexander/SFML-switch/archive/2ed34877d299a3fa11823da333152759838a60c4.zip
+    )
+else()
+    FetchContent_Declare(
+            sfml
+            URL https://github.com/SFML/SFML/archive/ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958.zip
+    )
+endif()
 FetchContent_MakeAvailable(sfml)
 
 # this creates the variables SFML_SOURCE_DIR, SFML_BINARY_DIR and SFML_POPULATED

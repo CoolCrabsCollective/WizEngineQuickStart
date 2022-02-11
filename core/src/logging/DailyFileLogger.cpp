@@ -45,14 +45,19 @@ std::ofstream& DailyFileLogger::getCurrentFile() const {
     {
         file.close();
         curFile = presentFile;
+
+#ifndef OS_SWITCH
         if(ensure_directory(directory) != 0)
             throw std::runtime_error("Failed to create directory " + directory + " for logging");
+#endif
 
         std::string fileName = directory + curFile;
         file.open(fileName, std::ios::out | std::ios::app);
 
+#ifndef OS_SWITCH
         if(file.fail())
             throw std::runtime_error("Failed to open file " + fileName + " for logging");
+#endif
     }
 
     return file;

@@ -81,7 +81,7 @@ LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s \
 		-lFLAC -lvorbisfile \
 		-lvorbisenc -lvorbis -logg -lsfml-system-s -lSDL2 -lEGL -lglapi -lGLESv2 -lglad \
 		-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
-		 -lmojoal -lSDL2 -lnx
+		 -lmojoal -lSDL2 -lnx -lWizEngineCore_lib
 
 
 #---------------------------------------------------------------------------------

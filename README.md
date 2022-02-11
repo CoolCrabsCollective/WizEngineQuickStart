@@ -30,5 +30,16 @@ Build via the instructions in the readme on my fork of [SFML-switch](https://git
 ### Installing mojoAL-switch
 Go [here](https://github.com/TomBebb/mojoAL-switch/releases/tag/latest) for the latest release and copy the .a file to `$DEVKITPRO/portlibs/switch/lib`
 
+### Installing WizEngineCore
+Build via
+```
+cd core
+cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/DevkitA64Libnx.cmake
+cd build
+make
+cd ..
+./install-built-library.sh
+```
+
 ### Launch homebrew with debug printing for hardware testing
 * `/opt/devkitpro/tools/bin/nxlink -s path/to/homebrew.nro`

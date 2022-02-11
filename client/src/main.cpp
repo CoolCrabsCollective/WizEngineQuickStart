@@ -11,14 +11,22 @@
 #include <logging/DateTimeLoggerWrapper.h>
 #include <logging/TagLoggerWrapper.h>
 
-#include "asset_resolver.h"
-#include "test_subdir/test_subdir.h"
+//#include "asset_resolver.h"
+//#include "test_subdir/test_subdir.h"
 
 #include "logging/DailyFileLogger.h"
 
 #ifdef OS_SWITCH
 	#include <switch.h>
 #endif
+
+std::string asset(const char* path) {
+#ifdef OS_SWITCH
+    return "romfs:/" + std::string(path);
+#else
+    return "res/" + std::string(path);
+#endif
+}
 
 int main(int argc, char* argv[])
 {
@@ -62,7 +70,7 @@ int main(int argc, char* argv[])
 #ifdef OS_UNIX
     logger->info("OS is Unix");
 #endif
-    testFunction();
+    //testFunction();
 
 #ifndef OS_SWITCH
 	sf::Music music;
