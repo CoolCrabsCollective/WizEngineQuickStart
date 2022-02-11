@@ -15,7 +15,7 @@ make
 cd ..
 ```
 
-This will produce an executable with its asset in the folder `client/out/<your platform>/` (e.g. `client/out/linux64` on 64 bits Linux systems)
+This will produce an executable and copy required assets in the folder `client/out/<your platform>/`. (e.g. `client/out/linux64` on 64 bits Linux systems)
 
 ### Executing
 
