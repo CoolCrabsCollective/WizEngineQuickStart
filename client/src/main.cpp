@@ -6,9 +6,15 @@
 #include <SFML/System.hpp>
 #include <iostream>
 #include <cstdint>
+#include <logging/MultiLogger.h>
+#include <logging/StdOutLogger.h>
+#include <logging/DateTimeLoggerWrapper.h>
+#include <logging/TagLoggerWrapper.h>
 
 #include "asset_resolver.h"
 #include "test_subdir/test_subdir.h"
+
+#include "logging/DailyFileLogger.h"
 
 #ifdef OS_SWITCH
 	#include <switch.h>
@@ -29,16 +35,15 @@ int main(int argc, char* argv[])
     fclose(stderrFile);
 #endif
 
-    auto now = std::chrono::system_clock::now();
-    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
-    auto epoch = now_ms.time_since_epoch();
-    auto value = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-    long duration = value.count();
-
-    std::cout << "[" << duration << "] Launching app " << std::endl;
+    std::unique_ptr<Logger> logger = std::unique_ptr<Logger>(new TagLoggerWrapper(
+            new DateTimeLoggerWrapper(
+                new MultiLogger({
+                    new DailyFileLogger("logs/", LogLevel::DEBUG),
+                    new StdOutLogger(LogLevel::DEBUG)
+                }), "[%H:%M:%S]")));
 
 #ifdef OS_SWITCH
-    std::cout << "OS is Switch" << std::endl;
+    logger->info("OS is Switch");
 	// Setup NXLink
 	socketInitializeDefault();
 	nxlinkStdio();
@@ -47,15 +52,15 @@ int main(int argc, char* argv[])
 #endif
 
 #ifdef OS_WINDOWS
-    std::cout << "OS is Windows" << std::endl;
+    logger->info("OS is Windows");
 #endif
 
 #ifdef OS_MAC
-    std::cout << "OS is Mac" << std::endl;
+    logger->info("OS is Mac");
 #endif
 
 #ifdef OS_UNIX
-    std::cout << "OS is Unix" << std::endl;
+    logger->info("OS is Unix");
 #endif
     testFunction();
 
@@ -63,14 +68,14 @@ int main(int argc, char* argv[])
 	sf::Music music;
 
 	if(!music.openFromFile(asset("greenlife.ogg"))) {
-        std::cerr << "Failed to load music greenlife.ogg" << std::endl;
+        logger->error("Failed to load music greenlife.ogg");
         return -1;
     }
 
 	sf::SoundBuffer buffer;
 
 	if(!buffer.loadFromFile(asset("jump.ogg"))) {
-        std::cerr << "Failed to load sound jump.ogg" << std::endl;
+        logger->error("Failed to load sound jump.ogg");
         return -1;
     }
 
@@ -83,7 +88,7 @@ int main(int argc, char* argv[])
 	sf::Font font;
 	if(!font.loadFromFile(asset("sans.ttf")))
 	{
-		std::cout << "Font not loaded" << std::endl;
+        logger->error("Failed to load font sans.tff");
 		return EXIT_FAILURE;
 	}
 
@@ -100,15 +105,15 @@ int main(int argc, char* argv[])
 	sf::RenderWindow window(mode, "SFML Game Template Project");
 	sf::Clock deltaClock;
 
-	std::cout << "Loading textures" << std::endl;
+    logger->info("Loading textures");
 	sf::Texture playerTex;
 	if(!playerTex.loadFromFile(asset("player.png"))) {
-		std::cout << "Texture failed to load" << std::endl;
+        logger->error("Failed to load texture player.png");
 		return EXIT_FAILURE;
 	}
 	sf::Texture backgroundTex;
 	if(!backgroundTex.loadFromFile(asset("background.jpg"))) {
-		std::cout << "Texture failed to load" << std::endl;
+        logger->error("Failed to load texture background.jpg");
 		return EXIT_FAILURE;
 	}
 	sf::Sprite player;
@@ -130,15 +135,15 @@ int main(int argc, char* argv[])
 	bool wasStopPressed = false;
 
 #ifndef OS_SWITCH
-	std::string ip("192.168.0.5");
+	std::string ip("localhost");
 	uint16_t port = 2020;
 	sf::Time delay = sf::seconds(1.0f);
-	std::cout << "Attempting to connect to: " << ip << ":" << port << std::endl;
+    logger->info("Attempting to connect to: " + ip + ":" + std::to_string(port));
 	sf::TcpSocket socket;
 	sf::Socket::Status status = socket.connect(ip, port, delay);
 
 	if (status != sf::Socket::Done) {
-		std::cout << "FUCK!!! NETWORK NOT FOUND !! BOOT UP THE SERVER !!!!" << std::endl;
+        logger->error("FUCK!!! NETWORK NOT FOUND !! BOOT UP THE SERVER !!!!");
 	}
 #endif
 
@@ -146,7 +151,7 @@ int main(int argc, char* argv[])
 		sf::Event e;
 		while (window.pollEvent(e)) {
 			if(e.type == sf::Event::EventType::Closed) {
-				std::cout << "Good bye!" << std::endl;
+                logger->info("Good bye!");
 				window.close();
 				break;
 			}
@@ -182,12 +187,12 @@ int main(int argc, char* argv[])
 		if(sf::Touch::isDown(1) || (playPressed && !wasPlayPressed))
 		{
 			music.play();
-			std::cout << "Playing music!" << std::endl;
+            logger->info("Playing music!");
 		}
 		else if(sf::Touch::isDown(2) || (stopPressed && !wasStopPressed))
 		{
 			music.pause();
-			std::cout << "Stopping music!" << std::endl;
+            logger->info("Stopping music!");
 		}
 #endif
 

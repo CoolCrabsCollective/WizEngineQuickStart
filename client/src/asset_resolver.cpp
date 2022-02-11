@@ -5,6 +5,10 @@
 
 #include "asset_resolver.h"
 
+#ifdef OS_SWITCH
+#include <switch.h>
+#endif
+
 std::string asset(const char* path) {
 #ifdef OS_SWITCH
     return "romfs:/" + std::string(path);

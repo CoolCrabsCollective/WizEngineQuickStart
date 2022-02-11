@@ -33,12 +33,14 @@ FetchContent_GetProperties(SFML)
 
 # Other dependencies
 
+add_subdirectory(../core build)
+
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL)
 find_package(Threads REQUIRED)
 
 # include and source files
-include_directories(include ${SFML_SOURCE_DIR}/include)
+include_directories(include ${SFML_SOURCE_DIR}/include ../core/include)
 
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -48,7 +50,7 @@ file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*/*/*.cpp
         ${PROJECT_SOURCE_DIR}/include/*/*/*.h)
 
-add_library(${CMAKE_PROJECT_NAME}_lib ${SOURCE_FILES})
+add_library(${CMAKE_PROJECT_NAME}_lib STATIC ${SOURCE_FILES})
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} sfml-system sfml-window sfml-graphics sfml-audio sfml-network pthread)
+target_link_libraries(${PROJECT_NAME} WizEngineCore_lib sfml-system sfml-window sfml-graphics sfml-audio sfml-network pthread)

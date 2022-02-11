@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(GameTemplate)
+project(WizEngineCore)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -26,7 +26,7 @@ endif()
 #
 # Set C++ version
 #
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 11)
 
 
 #
@@ -39,7 +39,6 @@ set(CMAKE_CXX_STANDARD 20)
 #   mac/
 #   linux64/
 #   linux32/
-#   switch/ (handled by Makefile)
 #
 if(WIN32)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -71,14 +70,12 @@ FetchContent_GetProperties(SFML)
 
 # Other dependencies
 
-add_subdirectory(../core build)
-
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL)
 find_package(Threads REQUIRED)
 
 # include and source files
-include_directories(include ${SFML_SOURCE_DIR}/include ../core/include)
+include_directories(include ${SFML_SOURCE_DIR}/include)
 
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -88,40 +85,4 @@ file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*/*/*.cpp
         ${PROJECT_SOURCE_DIR}/include/*/*/*.h)
 
-add_library(GameTemplate_lib STATIC ${SOURCE_FILES})
-add_executable(GameTemplate ${SOURCE_FILES})
-
-target_link_libraries(${PROJECT_NAME} WizEngineCore_lib sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
-
-if (UNIX)
-    target_link_libraries(${PROJECT_NAME} pthread)
-endif (UNIX)
-
-#
-# Deletes the old res folder and copies the latest one
-# NOTE: Cmake doesn't refresh the res folder unless there are compilation changes
-# ideally it would when there are file changes in res but I don't know how to
-# achieve that
-#
-add_custom_command(TARGET GameTemplate PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E remove_directory
-        $<TARGET_FILE_DIR:GameTemplate>/res)
-
-add_custom_command(TARGET GameTemplate POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${PROJECT_SOURCE_DIR}/res $<TARGET_FILE_DIR:GameTemplate>/res)
-
-
-# Copy openal32.dll for windows
-
-if(WIN32)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8) # 64 bit check
-        add_custom_command(TARGET GameTemplate POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${PROJECT_SOURCE_DIR}/cmake-build-debug/_deps/sfml-src/extlibs/bin/x64 $<TARGET_FILE_DIR:GameTemplate>)
-    else()
-        add_custom_command(TARGET GameTemplate POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${PROJECT_SOURCE_DIR}/cmake-build-debug/_deps/sfml-src/extlibs/bin/x86 $<TARGET_FILE_DIR:GameTemplate>)
-    endif()
-endif()
+add_library(${PROJECT_NAME}_lib STATIC ${SOURCE_FILES})
