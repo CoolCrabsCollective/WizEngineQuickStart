@@ -90,4 +90,6 @@ cd client
 make
 ```
 
-This will produce an .nro file in the folder `client/out/switch/` you can then copy onto your switch open with (Yuzu)[!https://yuzu-emu.org/].
+### Executing
+
+Use the produced .nro file in the folder `client/out/switch/` to run onto your switch or open with (Yuzu)[!https://yuzu-emu.org/].
