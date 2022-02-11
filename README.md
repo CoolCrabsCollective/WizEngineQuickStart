@@ -92,4 +92,4 @@ make
 
 ### Executing
 
-Use the produced .nro file in the folder `client/out/switch/` to run onto your switch or open with (Yuzu)[!https://yuzu-emu.org/].
+Use the produced .nro file in the folder `client/out/switch/` to run onto your switch or open with [Yuzu](https://yuzu-emu.org/).
