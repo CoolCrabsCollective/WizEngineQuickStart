@@ -5,12 +5,14 @@
 #ifndef GAMETEMPLATE_ASSET_H
 #define GAMETEMPLATE_ASSET_H
 
-template <typename T>
-class Asset {
-public:
-    virtual ~Asset() = default;
+#include "AssetBase.h"
 
-    virtual T load() = 0;
+template <typename T>
+class Asset : public AssetBase {
+public:
+    void dispose(void* data) const override {
+        delete (T*)data;
+    }
 };
 
 

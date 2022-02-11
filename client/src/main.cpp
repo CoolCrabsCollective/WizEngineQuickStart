@@ -6,10 +6,13 @@
 #include <SFML/System.hpp>
 #include <iostream>
 #include <cstdint>
+#include <memory>
 #include <logging/MultiLogger.h>
 #include <logging/StdOutLogger.h>
 #include <logging/DateTimeLoggerWrapper.h>
 #include <logging/TagLoggerWrapper.h>
+#include <asset/AssetLoader.h>
+#include <asset/MusicAsset.h>
 
 #include "asset_resolver.h"
 #include "test_subdir/test_subdir.h"
@@ -28,6 +31,24 @@ int main(int argc, char* argv[])
                     new DailyFileLogger("logs/", LogLevel::DEBUG),
                     new StdOutLogger(LogLevel::DEBUG)
                 }), "[%H:%M:%S]")));
+
+    /*
+
+    The following code works but isn't fully implemented nor tested on switch
+
+    std::unique_ptr<AssetLoader> loader = std::make_unique<AssetLoader>(*logger);
+
+    MusicAsset greenlife(asset("greenlife.ogg"));
+    MusicAsset jump(asset("jump.ogg"));
+
+    loader->load(greenlife);
+    loader->load(jump);
+
+    while(loader->getProgress() < 1.0f)
+        loader->update(std::chrono::milliseconds(1000));
+
+    logger->info("Done loading");
+     */
 
 #ifdef OS_SWITCH
     logger->info("OS is Switch");

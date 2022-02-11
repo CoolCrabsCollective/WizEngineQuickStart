@@ -10,37 +10,39 @@
 #include <logging/Logger.h>
 #include <map>
 #include <memory>
+#include <stdexcept>
 #include "Asset.h"
 
 class AssetLoader {
     const Logger& logger;
 
-    const std::map<const void*, void*> map;
+    mutable std::map<const AssetBase*, void*> map;
+
+    uint32_t loaded = 0;
 public:
     AssetLoader(const Logger& logger);
 
+    AssetLoader(const AssetLoader&) = delete;
+
+    virtual ~AssetLoader();
+
+    void load(const AssetBase& asset);
+
+    void update(std::chrono::duration<float, std::milli> duration);
+
+    void finishLoading(const AssetBase& asset);
+
     template<class T>
-    void load(const Asset<T>& asset) {
-
-    }
-
-    template<class T>
-    void finishLoading(const Asset<T>& asset) {
-
-    }
-
-    template<class T>
-    T* get(const Asset<T>& asset) {
+    T* get(const Asset<T>& asset) const {
         void* pointer = map[&asset];
 
         if(pointer == nullptr)
+            throw std::invalid_argument("Asset " + asset.getName() + " not loaded");
 
-
-        return (T*)pointer;
+        return static_cast<T*>(pointer);
     }
 
-
-    void update(long time);
+    bool isLoaded(const AssetBase& asset) const;
 
     float getProgress() const;
 
