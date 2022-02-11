@@ -1,9 +1,9 @@
 #include <SFML/Network.hpp>
-#include <logging/TagLoggerWrapper.h>
-#include <logging/DateTimeLoggerWrapper.h>
-#include <logging/MultiLogger.h>
-#include <logging/DailyFileLogger.h>
-#include <logging/StdOutLogger.h>
+#include <WIZ/logging/TagLoggerWrapper.h>
+#include <WIZ/logging/DateTimeLoggerWrapper.h>
+#include <WIZ/logging/MultiLogger.h>
+#include <WIZ/logging/DailyFileLogger.h>
+#include <WIZ/logging/StdOutLogger.h>
 
 int main()    
 {

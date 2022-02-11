@@ -7,17 +7,17 @@
 #include <iostream>
 #include <cstdint>
 #include <memory>
-#include <logging/MultiLogger.h>
-#include <logging/StdOutLogger.h>
-#include <logging/DateTimeLoggerWrapper.h>
-#include <logging/TagLoggerWrapper.h>
-#include <asset/AssetLoader.h>
-#include <asset/MusicAsset.h>
+#include <WIZ/logging/MultiLogger.h>
+#include <WIZ/logging/StdOutLogger.h>
+#include <WIZ/logging/DateTimeLoggerWrapper.h>
+#include <WIZ/logging/TagLoggerWrapper.h>
+#include <WIZ/asset/AssetLoader.h>
+#include <WIZ/asset/MusicAsset.h>
 
 #include "asset_resolver.h"
 #include "test_subdir/test_subdir.h"
 
-#include "logging/DailyFileLogger.h"
+#include <WIZ/logging/DailyFileLogger.h>
 
 #ifdef OS_SWITCH
 	#include <switch.h>

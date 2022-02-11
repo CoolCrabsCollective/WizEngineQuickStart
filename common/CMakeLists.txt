@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.7)
-project(WizEngineCore)
+
+get_filename_component(PARENT_PROJECT_PATH .. ABSOLUTE)
+get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
+
+project(${PARENT_PROJECT_NAME}_common)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -62,20 +66,27 @@ endif()
 include(FetchContent)
 if(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
     FetchContent_Declare(
-            sfml
+            SFML
             URL https://github.com/WinterAlexander/SFML-switch/archive/2ed34877d299a3fa11823da333152759838a60c4.zip
     )
 else()
     FetchContent_Declare(
-            sfml
+            SFML
             URL https://github.com/SFML/SFML/archive/ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958.zip
     )
 endif()
-FetchContent_MakeAvailable(sfml)
+FetchContent_MakeAvailable(SFML)
 
 # this creates the variables SFML_SOURCE_DIR, SFML_BINARY_DIR and SFML_POPULATED
 # then SFML_SOURCE_DIR is used below to include the header files
 FetchContent_GetProperties(SFML)
+
+FetchContent_Declare(
+        WizEngine
+        URL https://github.com/WinterAlexander/WizEngine/archive/ddbc5909abdcdd44ad42986f637f666755e3919e.zip
+)
+FetchContent_MakeAvailable(WizEngine)
+FetchContent_GetProperties(WizEngine)
 
 # Other dependencies
 
@@ -84,7 +95,7 @@ find_package(OpenGL)
 find_package(Threads REQUIRED)
 
 # include and source files
-include_directories(include ${SFML_SOURCE_DIR}/include)
+include_directories(include ${SFML_SOURCE_DIR}/include ${WizEngine_SOURCE_DIR}/include)
 
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -94,4 +105,4 @@ file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*/*/*.cpp
         ${PROJECT_SOURCE_DIR}/include/*/*/*.h)
 
-add_library(${PROJECT_NAME}_lib STATIC ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})

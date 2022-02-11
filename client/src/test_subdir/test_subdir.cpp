@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <logging/Logger.h>
+#include <WIZ/logging/Logger.h>
 
 #ifdef OS_SWITCH
 #include <switch.h>

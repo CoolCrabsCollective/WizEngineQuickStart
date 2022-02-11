@@ -5,7 +5,7 @@
 #ifndef GAMETEMPLATE_TEST_SUBDIR_H
 #define GAMETEMPLATE_TEST_SUBDIR_H
 
-#include <logging/Logger.h>
+#include <WIZ/logging/Logger.h>
 
 void testFunction(const Logger& logger);
 
