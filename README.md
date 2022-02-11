@@ -60,23 +60,31 @@ Customize your existing pacman installation using this guide: https://devkitpro.
 
 If library is custom and thus not found using pacman, copy .a files to `$DEVKITPRO/portlibs/switch/lib`
 
-#### Installing SFML-switch
-Build via the instructions in the readme on my fork of [SFML-switch](https://github.com/RealWilliamWells/SFML-switch) then run the installation bash script.
-
-#### Installing mojoAL-switch
-Go [here](https://github.com/TomBebb/mojoAL-switch/releases/tag/latest) for the latest release and copy the .a file to `$DEVKITPRO/portlibs/switch/lib`
-
 #### Installing WizEngine
+
+Install the WizEngine using the following commands. This will install sfml as well at the same time.
 
 ```
 git clone https://github.com/WinterAlexander/WizEngine
 cd WizEngine
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/DevkitA64Libnx.cmake
-cd build
-make
-cd ..
-./install-built-library.sh
+./switch-install.sh
 ```
+
+This procedure should have copied the following files 
+```
+libWizEngine.a
+libsfml-audio.a
+libsfml-graphics.a
+libsfml-network.a
+libsfml-system.a
+libsfml-window.a
+```
+
+to the directory `$DEVKITPRO/portlibs/switch/lib/`. Make sure they are present after this script has run.
+
+#### Installing mojoAL-switch
+Go [here](https://github.com/TomBebb/mojoAL-switch/releases/tag/latest) for the latest release and copy the .a file to `$DEVKITPRO/portlibs/switch/lib`
+
 
 This completes the installation setup.
 
