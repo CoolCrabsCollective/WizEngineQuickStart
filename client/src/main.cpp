@@ -1,5 +1,3 @@
-#include "os_finder.h"
-
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
@@ -14,7 +12,6 @@
 #include <WIZ/asset/AssetLoader.h>
 #include <WIZ/asset/MusicAsset.h>
 
-#include "asset_resolver.h"
 #include "HelloSFMLScreen.h"
 #include "ExampleGame.h"
 
