@@ -83,7 +83,8 @@ FetchContent_GetProperties(SFML)
 
 FetchContent_Declare(
         WizEngine
-        URL https://github.com/WheezyWiseWizards/WizEngine/archive/d8a9aa940077c503f9212752ed48cba0264ac0ad.zip
+        # common/ uses the version defined in either client or server
+        URL https://github.com/WheezyWiseWizards/WizEngine/archive/${WizEngine_COMMIT}.zip
 )
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)

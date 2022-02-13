@@ -5,6 +5,8 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_server)
 
+set(WizEngine_COMMIT 72c3c57c68cbe51f817894b1b0ec984de7dab0ea)
+
 # static linking of libraries on linux
 set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,-lpthread -lc")
@@ -37,7 +39,7 @@ FetchContent_GetProperties(SFML)
 
 FetchContent_Declare(
 	WizEngine
-	URL https://github.com/WheezyWiseWizards/WizEngine/archive/d8a9aa940077c503f9212752ed48cba0264ac0ad.zip
+	URL https://github.com/WheezyWiseWizards/WizEngine/archive/${WizEngine_COMMIT}.zip
 )	
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)
