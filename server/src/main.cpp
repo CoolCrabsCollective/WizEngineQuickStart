@@ -7,11 +7,11 @@
 
 int main()    
 {
-    std::unique_ptr<Logger> logger = std::unique_ptr<Logger>(new TagLoggerWrapper(
-            new DateTimeLoggerWrapper(
-                    new MultiLogger({
-                            new DailyFileLogger("logs/", LogLevel::DEBUG),
-                            new StdOutLogger(LogLevel::DEBUG)
+    std::unique_ptr<wiz::Logger> logger = std::unique_ptr<wiz::Logger>(new wiz::TagLoggerWrapper(
+            new wiz::DateTimeLoggerWrapper(
+                    new wiz::MultiLogger({
+                            new wiz::DailyFileLogger("logs/", wiz::LogLevel::DEBUG),
+                            new wiz::StdOutLogger(wiz::LogLevel::DEBUG)
                     }), "[%H:%M:%S]")));
 
     logger->info("Starting test server");

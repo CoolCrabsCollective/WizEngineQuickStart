@@ -1,19 +1,14 @@
-#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
 #include <SFML/System.hpp>
-#include <iostream>
-#include <cstdint>
 #include <memory>
 #include <WIZ/logging/MultiLogger.h>
 #include <WIZ/logging/StdOutLogger.h>
 #include <WIZ/logging/DateTimeLoggerWrapper.h>
 #include <WIZ/logging/TagLoggerWrapper.h>
 #include <WIZ/asset/AssetLoader.h>
-#include <WIZ/asset/MusicAsset.h>
 
-#include "HelloSFMLScreen.h"
 #include "ExampleGame.h"
+#include "LoadingScreen.h"
 
 #include <WIZ/logging/DailyFileLogger.h>
 
@@ -39,22 +34,6 @@ int main(int argc, char* argv[])
                 }), "[%H:%M:%S]")));
 
 	std::shared_ptr<wiz::AssetLoader> loader = std::make_shared<wiz::AssetLoader>(*logger);
-
-    /*
-
-    The following code works but isn't fully implemented nor tested on switch
-
-    MusicAsset greenlife(asset("greenlife.ogg"));
-    MusicAsset jump(asset("jump.ogg"));
-
-    loader->load(greenlife);
-    loader->load(jump);
-
-    while(loader->getProgress() < 1.0f)
-        loader->update(std::chrono::milliseconds(1000));
-
-    logger->info("Done loading");
-     */
 
 #ifdef OS_SWITCH
     logger->info("OS is Switch");
@@ -85,7 +64,7 @@ int main(int argc, char* argv[])
 
 	ExampleGame game(window, logger, loader);
 
-	game.setScreen(new HelloSFMLScreen(game));
+	game.setScreen(std::shared_ptr<LoadingScreen>(new LoadingScreen(game)));
 
 	while (window->isOpen()) {
 		game.update();

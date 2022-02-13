@@ -3,9 +3,7 @@
 //
 
 #include "HelloSFMLScreen.h"
-#include "asset_resolver.h"
 #include "SFML/Graphics/Font.hpp"
-#include "SFML/Audio/SoundBuffer.hpp"
 #include "SFML/Window/Touch.hpp"
 #include "SFML/Network/TcpSocket.hpp"
 #include "SFML/Network/IpAddress.hpp"
@@ -13,47 +11,6 @@
 
 HelloSFMLScreen::HelloSFMLScreen(wiz::Game& game)
 	: Screen(game) {
-
-	if(!music.openFromFile(asset("greenlife.ogg"))) {
-		getLogger().error("Failed to load music greenlife.ogg");
-		throw std::runtime_error("Failed to load music greenlife.ogg");
-	}
-	music.setVolume(100.0f);
-
-	if(!buffer.loadFromFile(asset("jump.ogg"))) {
-		getLogger().error("Failed to load sound jump.ogg");
-		throw std::runtime_error("Failed to load sound jump.ogg");
-	}
-
-	sound.setBuffer(buffer);
-
-	if(!font.loadFromFile(asset("sans.ttf"))) {
-		getLogger().error("Failed to load font sans.tff");
-		throw std::runtime_error("Failed to load font sans.tff");
-	}
-
-	message.setString("Welcome to SFML valley.");
-	message.setFont(font);
-
-	if(!playerTex.loadFromFile(asset("player.png"))) {
-		getLogger().error("Failed to load texture player.png");
-		throw std::runtime_error("Failed to load texture player.png");
-	}
-	if(!backgroundTex.loadFromFile(asset("background.jpg"))) {
-		getLogger().error("Failed to load texture background.jpg");
-		throw std::runtime_error("Failed to load texture background.jpg");
-	}
-
-	player.setTexture(playerTex);
-	player.setOrigin(sf::Vector2f(player.getTextureRect().getSize() / 2));
-	player.setPosition(sf::Vector2f(300, 200));
-	player.setScale(sf::Vector2f(0.25f, 0.25f));
-
-	background.setTexture(backgroundTex);
-
-	circle.setRadius(40.0);
-	circle.setPosition(sf::Vector2f(100., 100.));
-	circle.setFillColor(sf::Color::Yellow);
 }
 
 void HelloSFMLScreen::tick(float delta) {
@@ -76,12 +33,12 @@ void HelloSFMLScreen::tick(float delta) {
 #ifndef OS_SWITCH
 	if(sf::Touch::isDown(1) || (playPressed && !wasPlayPressed))
 	{
-		music.play();
+		music->play();
 		getLogger().info("Playing music!");
 	}
 	else if(sf::Touch::isDown(2) || (stopPressed && !wasStopPressed))
 	{
-		music.pause();
+		music->pause();
 		getLogger().info("Stopping music!");
 	}
 #endif
@@ -132,6 +89,28 @@ void HelloSFMLScreen::render(sf::RenderTarget& target) {
 }
 
 void HelloSFMLScreen::show() {
+
+	music = getGame().getAssets().get(GameAssets::GREENLIFE);
+	music->setVolume(100.0f);
+
+	sound.setBuffer(*getGame().getAssets().get(GameAssets::JUMP));
+
+	message.setString("Welcome to SFML valley.");
+	message.setFont(*getGame().getAssets().get(GameAssets::SANS_TTF));
+
+	playerTex = getGame().getAssets().get(GameAssets::PLAYER);
+	backgroundTex = getGame().getAssets().get(GameAssets::BACKGROUND);
+
+	player.setTexture(*playerTex);
+	player.setOrigin(sf::Vector2f(player.getTextureRect().getSize() / 2));
+	player.setPosition(sf::Vector2f(300, 200));
+	player.setScale(sf::Vector2f(0.25f, 0.25f));
+
+	background.setTexture(*backgroundTex);
+
+	circle.setRadius(40.0);
+	circle.setPosition(sf::Vector2f(100., 100.));
+	circle.setFillColor(sf::Color::Yellow);
 
 #ifndef OS_SWITCH
 	sf::IpAddress address("localhost");

@@ -6,6 +6,7 @@
 #define GAMETEMPLATE_HELLOSFMLSCREEN_H
 
 
+#include "GameAssets.h"
 #include "WIZ/game/Screen.h"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Audio/Sound.hpp"
@@ -19,11 +20,9 @@
 class HelloSFMLScreen : public wiz::Screen, public wiz::WindowListener {
 	std::string name = "HelloSFMLScreen";
 
-	sf::Font font;
-	sf::SoundBuffer buffer;
 	sf::Sound sound;
-	sf::Music music;
-	sf::Texture playerTex, backgroundTex;
+	sf::Music* music;
+	sf::Texture* playerTex, *backgroundTex;
 
 	sf::Text message;
 

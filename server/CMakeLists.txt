@@ -5,7 +5,7 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_server)
 
-set(WizEngine_COMMIT 31d47f9c833638a68a52362bfe9d27c752c7cbb0)
+set(WizEngine_COMMIT e4e93b17ba1166e1624eff32d94297fd26b86b10)
 
 # static linking of libraries on linux
 set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")

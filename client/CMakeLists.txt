@@ -5,7 +5,7 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_client)
 
-set(WizEngine_COMMIT 31d47f9c833638a68a52362bfe9d27c752c7cbb0)
+set(WizEngine_COMMIT e4e93b17ba1166e1624eff32d94297fd26b86b10)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -22,7 +22,8 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 elseif(UNIX)
     # static linking of libraries on linux
     set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")
-    #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,-lpthread -lc")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,./lib/") # -lpthread -lFLAC -logg -lvorbis -lvorbisfile -lvorbisenc -lc -lm -lfreetype -lopenal -ldl -lX11 -lXrandr -lXcursor -lGL -ludev -lrt -lz -lbz2 -lpng -lharfbuzz -lbrotlidec -lstdc++ -lgcc -lxcb -lXext -lXrender -lXfixes -lGLdispatch -lGLX -lgraphite2 -lglib -lbrotlicommon -lXau -lXdmcp -lpcre")
+
     add_compile_definitions(OS_UNIX) # applies C++ macro
 endif()
 
@@ -57,8 +58,10 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/mac/)
 elseif(UNIX)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux64/lib/)
         set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux64/)
     else()
+        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux32/lib/)
         set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux32/)
     endif()
 endif()
