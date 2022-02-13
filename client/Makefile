@@ -78,7 +78,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= 	-lsfml-window -lsfml-graphics -lsfml-audio -lsfml-system \
+LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s -lsfml-network-s \
 		-lFLAC -lvorbisfile \
 		-lvorbisenc -lvorbis -logg -lSDL2 -lEGL -lglapi -lGLESv2 -lglad \
 		-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
