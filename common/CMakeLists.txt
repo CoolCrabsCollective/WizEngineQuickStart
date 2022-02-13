@@ -5,6 +5,8 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_common)
 
+set(WizEngine_COMMIT e4e93b17ba1166e1624eff32d94297fd26b86b10)
+
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
     add_definitions(-Wall -ansi -Wno-deprecated -pthread -Wpedantic)
@@ -24,6 +26,7 @@ elseif(UNIX)
     add_compile_definitions(OS_UNIX) # applies C++ macro
 elseif(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
     add_compile_definitions(OS_SWITCH) # applies C++ macro
+    set(CMAKE_USER_MAKE_RULES_OVERRIDE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/CompilerOptionsOverride.cmake")
 endif()
 
 # Note: os_finder.h ensures OS_SWITCH is defined when no other OS is defined
@@ -67,7 +70,7 @@ include(FetchContent)
 if(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
     FetchContent_Declare(
             SFML
-            URL https://github.com/WinterAlexander/SFML-switch/archive/2ed34877d299a3fa11823da333152759838a60c4.zip
+            URL https://github.com/WheezyWiseWizards/SFML-switch/archive/5c5d0275762432dcc5354a0ec4cf8404597d1b05.zip
     )
 else()
     FetchContent_Declare(
@@ -97,6 +100,10 @@ find_package(Threads REQUIRED)
 
 # include and source files
 include_directories(include ${SFML_SOURCE_DIR}/include ${WizEngine_SOURCE_DIR}/include)
+
+if(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
+    include_directories(${LIBNX_INCLUDE_DIR})
+endif()
 
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp
