@@ -78,11 +78,11 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s \
-		-lFLAC -lvorbisfile \
-		-lvorbisenc -lvorbis -logg -lsfml-system-s -lSDL2 -lEGL -lglapi -lGLESv2 -lglad \
-		-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
-		 -lmojoal -lSDL2 -lnx -lWizEngine
+LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s -lsfml-network-s \
+			-lFLAC -lvorbisfile -lvorbisenc -lvorbis -logg -lmojoal \
+			-lSDL2 -lnx -lEGL -lglapi -lGLESv2 -lglad \
+			-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
+			-lWizEngine
 
 
 #---------------------------------------------------------------------------------
@@ -246,6 +246,22 @@ $(OFILES_SRC)	: $(HFILES_BIN)
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	@$(bin2o)
+
+#%.png.o	%_png.h :	%.png
+#	@echo $(notdir $<)
+#	@$(bin2o)
+
+#%.jpg.o	%_jpg.h :	%.jpg
+#	@echo $(notdir $<)
+#	@$(bin2o)
+
+#%.ogg.o	%_ogg.h :	%.ogg
+#	@echo $(notdir $<)
+#	@$(bin2o)
+
+#%.ttf.o	%_ttf.h :	%.ttf
+#	@echo $(notdir $<)
+#	@$(bin2o)
 
 -include $(DEPENDS)
 
