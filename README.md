@@ -15,16 +15,16 @@ make
 cd ..
 ```
 
-This will produce an executable and copy required assets in the folder `client/out/<your platform>/`. (e.g. `client/out/linux64` on 64 bits Linux systems)
+This will produce an executable and copy required assets in the folder `client/bin/<your platform>/`. (e.g. `client/bin/linux64` on 64 bits Linux systems)
 
 ### Executing
 
 ```
-cd out/<your platform>/
+cd bin/<your platform>/
 ./<Executable name> # Name will change according to your project name
 ```
 
-Make sure you distribute all files that are in the `out/<your platform>` folder. .so, .dll and res/ folder are all required by the game.
+Make sure you distribute all files that are in the `bin/<your platform>` folder. .so, .dll and res/ folder are all required by the game.
 
 ## Switch
 
@@ -100,7 +100,7 @@ make
 
 ### Executing
 
-Use the produced .nro file in the folder `client/out/switch/` to run onto your switch or open with [Yuzu](https://yuzu-emu.org/).
+Use the produced .nro file in the folder `client/bin/switch/` to run onto your switch or open with [Yuzu](https://yuzu-emu.org/).
 
 
 # Deploying the server
