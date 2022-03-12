@@ -4,4 +4,3 @@ cmake-build-release/
 bin/
 build/
 build-switch/
-out/

@@ -38,33 +38,6 @@ endif()
 set(CMAKE_CXX_STANDARD 20)
 
 
-#
-# The following if-else chain makes the different platform output at different
-# paths:
-#
-# out/
-#   windows64/
-#   windows32/
-#   mac/
-#   linux64/
-#   linux32/
-#
-if(WIN32)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/windows64/)
-    else()
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/windows32/)
-    endif()
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/mac/)
-elseif(UNIX)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux64/)
-    else()
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux32/)
-    endif()
-endif()
-
 # Fetches SFML dependency and loads its CMakeLists.txt
 include(FetchContent)
 if(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")

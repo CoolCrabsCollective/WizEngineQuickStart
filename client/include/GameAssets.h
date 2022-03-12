@@ -18,13 +18,13 @@
 namespace GameAssets {
 	extern std::vector<const wiz::AssetBase*> ALL;
 
-	ASSET(wiz::MusicAsset, GREENLIFE, ("greenlife.ogg"))
-	ASSET(wiz::SoundAsset, JUMP, ("jump.ogg"))
-	ASSET(wiz::FontAsset, SANS_TTF, ("sans.ttf"))
+	ASSET(wiz::MusicAsset, GREENLIFE, ("music/greenlife.ogg"))
+	ASSET(wiz::SoundAsset, JUMP, ("sfx/jump.ogg"))
+	ASSET(wiz::FontAsset, SANS_TTF, ("font/sans.ttf"))
 
-	ASSET(wiz::TextureAsset, PLAYER, ("player.png"))
-	ASSET(wiz::TextureAsset, BACKGROUND, ("background.jpg"))
-	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("white_pixel.png"))
+	ASSET(wiz::TextureAsset, PLAYER, ("gfx/player.png"))
+	ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.jpg"))
+	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
 
 	ASSET(FakeAsset, FAKE_ASSET0, ("FakeAsset0"))
 	ASSET(FakeAsset, FAKE_ASSET1, ("FakeAsset1"))

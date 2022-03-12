@@ -45,7 +45,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 
 
 # nice output path that is consistent with what CMake does
-TARGET		:=	out/switch/GameTemplate
+TARGET		:=	bin/switch/GameTemplate
 
 # unique folder to avoid conflicting with cmake
 BUILD		:=	build-switch
@@ -72,8 +72,7 @@ CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 
 CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags`
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti
-#-std=gnu++20
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=gnu++20
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
@@ -193,7 +192,7 @@ endif
 all: $(BUILD)
 
 $(BUILD):
-	@[ -d $@ ] || mkdir -p $@ | mkdir -p out/switch | mkdir -p out
+	@[ -d $@ ] || mkdir -p $@ | mkdir -p bin | mkdir -p bin/switch
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------

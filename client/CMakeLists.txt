@@ -40,7 +40,7 @@ set(CMAKE_CXX_STANDARD 20)
 # The following if-else chain makes the different platform output at different
 # paths:
 #
-# out/
+# bin/
 #   windows64/
 #   windows32/
 #   mac/
@@ -50,19 +50,19 @@ set(CMAKE_CXX_STANDARD 20)
 #
 if(WIN32)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/windows64/)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/windows64/)
     else()
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/windows32/)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/windows32/)
     endif()
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/mac/)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/mac/)
 elseif(UNIX)
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux64/lib/)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux64/)
+        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/linux64/lib/)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/linux64/)
     else()
-        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux32/lib/)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux32/)
+        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/linux32/lib/)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/linux32/)
     endif()
 endif()
 

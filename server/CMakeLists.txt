@@ -17,11 +17,10 @@ add_compile_definitions(OS_UNIX) # applies C++ macro
 #
 set(CMAKE_CXX_STANDARD 20)
 
-
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux64/)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/linux64/)
 else()
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/out/linux32/)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/linux32/)
 endif()
 
 # Fetches SFML dependency and loads its CMakeLists.txt
