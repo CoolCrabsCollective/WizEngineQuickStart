@@ -67,7 +67,7 @@ ROMFS   	:=	res
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
-CFLAGS	:=	-g -Wall -O2 -ffunction-sections -D OS_SWITCH \
+CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
 CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags`
@@ -78,9 +78,9 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s -lsfml-network-s \
+LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s \
 		-lFLAC -lvorbisfile \
-		-lvorbisenc -lvorbis -logg -lSDL2 -lEGL -lglapi -lGLESv2 -lglad \
+		-lvorbisenc -lvorbis -logg -lsfml-system-s -lSDL2 -lEGL -lglapi -lGLESv2 -lglad \
 		-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
 		 -lmojoal -lSDL2 -lnx -lWizEngine
 
