@@ -7,6 +7,9 @@
 #include "SFML/Window/Touch.hpp"
 #include "SFML/Network/TcpSocket.hpp"
 #include "SFML/Network/IpAddress.hpp"
+#include <sstream>
+#include <string>
+#include <iostream>
 
 
 HelloSFMLScreen::HelloSFMLScreen(wiz::Game& game)
@@ -121,8 +124,25 @@ void HelloSFMLScreen::show() {
 	sf::Socket::Status status = socket.connect(address, port, delay);
 
 	if (status != sf::Socket::Done) {
-		getLogger().error("FUCK!!! NETWORK NOT FOUND !! BOOT UP THE SERVER !!!!");
+		getLogger().error("NETWORK NOT FOUND !! BOOT UP THE SERVER !!!!");
 	}
+	else
+	{
+		char data[100];
+		std::size_t received;
+		if(socket.receive(data, 100, received) != sf::Socket::Done)
+		{
+			getLogger().error("ERROR WITH THE RECEIVED MSG !!!!");
+		}
+		else
+		{
+			std::stringstream ss;
+			ss << "Received " << received << " bytes" << std::endl;
+			ss << "Server Says: " << data << std::endl;
+			getLogger().info(ss.str());
+		}
+	}
+
 #endif
 
 	getGame().addWindowListener(this);
