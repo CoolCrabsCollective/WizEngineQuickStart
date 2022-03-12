@@ -5,7 +5,9 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_common)
 
-set(WizEngine_COMMIT bdc51efc27c842d69592c2488780b3b01e829e51)
+set(WizEngine_COMMIT 7bd7c007672555096b1dbbda6e6e6041ffdf5e1c)
+set(SFML_COMMIT ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958)
+set(SFML_SWITCH_COMMIT 5c5d0275762432dcc5354a0ec4cf8404597d1b05)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -43,12 +45,12 @@ include(FetchContent)
 if(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
     FetchContent_Declare(
             SFML
-            URL https://github.com/WheezyWiseWizards/SFML-switch/archive/5c5d0275762432dcc5354a0ec4cf8404597d1b05.zip
+            URL https://github.com/WheezyWiseWizards/SFML-switch/archive/${SFML_SWITCH_COMMIT}.zip
     )
 else()
     FetchContent_Declare(
             SFML
-            URL https://github.com/SFML/SFML/archive/ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958.zip
+            URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip
     )
 endif()
 FetchContent_MakeAvailable(SFML)

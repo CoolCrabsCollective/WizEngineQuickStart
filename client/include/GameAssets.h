@@ -25,6 +25,7 @@ namespace GameAssets {
 	ASSET(wiz::TextureAsset, PLAYER, ("gfx/player.png"))
 	ASSET(wiz::TextureAsset, BACKGROUND, ("gfx/background.jpg"))
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
+	ASSET(wiz::TextureAsset, LOGO, ("gfx/logo.png"))
 
 	ASSET(FakeAsset, FAKE_ASSET0, ("FakeAsset0"))
 	ASSET(FakeAsset, FAKE_ASSET1, ("FakeAsset1"))

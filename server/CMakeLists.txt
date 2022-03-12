@@ -5,7 +5,8 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_server)
 
-set(WizEngine_COMMIT bdc51efc27c842d69592c2488780b3b01e829e51)
+set(WizEngine_COMMIT 7bd7c007672555096b1dbbda6e6e6041ffdf5e1c)
+set(SFML_COMMIT ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958)
 
 # static linking of libraries on linux
 set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")
@@ -27,7 +28,7 @@ endif()
 include(FetchContent)
 FetchContent_Declare(
         SFML
-        URL https://github.com/SFML/SFML/archive/ef8d6ee7f710fff9bdaf69c6bb3660fa4d3a8958.zip
+        URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip
 )
 FetchContent_MakeAvailable(SFML)
 

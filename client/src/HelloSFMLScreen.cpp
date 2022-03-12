@@ -101,15 +101,12 @@ void HelloSFMLScreen::show() {
 	message.setString("Welcome to SFML valley.");
 	message.setFont(*getGame().getAssets().get(GameAssets::SANS_TTF));
 
-	playerTex = getGame().getAssets().get(GameAssets::PLAYER);
-	backgroundTex = getGame().getAssets().get(GameAssets::BACKGROUND);
-
-	player.setTexture(*playerTex);
+	player.setTexture(*getGame().getAssets().get(GameAssets::PLAYER));
 	player.setOrigin(sf::Vector2f(player.getTextureRect().getSize() / 2));
 	player.setPosition(sf::Vector2f(300, 200));
 	player.setScale(sf::Vector2f(0.25f, 0.25f));
 
-	background.setTexture(*backgroundTex);
+	background.setTexture(*getGame().getAssets().get(GameAssets::BACKGROUND));
 
 	circle.setRadius(40.0);
 	circle.setPosition(sf::Vector2f(100., 100.));
