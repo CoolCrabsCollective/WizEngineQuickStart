@@ -1,5 +1,5 @@
 #! /bin/bash
-set -e
+set -eu
 cd ../common
 ./switch-install.sh
 cd ../client

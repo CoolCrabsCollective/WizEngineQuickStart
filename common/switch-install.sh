@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e
+set -eu
 cmake -B build-switch -S . -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/DevkitA64Libnx.cmake
 cd build-switch
 cd _deps/wizengine-src
