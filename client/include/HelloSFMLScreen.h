@@ -37,6 +37,7 @@ class HelloSFMLScreen : public wiz::Screen, public wiz::WindowListener {
 
 	bool wasPlayPressed = false;
 	bool wasStopPressed = false;
+	bool wasSoundPressed = false;
 
 public:
 	HelloSFMLScreen(wiz::Game& game);

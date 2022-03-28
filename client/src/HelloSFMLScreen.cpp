@@ -24,58 +24,47 @@ void HelloSFMLScreen::tick(float delta) {
 
 	background.setScale(vec);
 
-	sf::Time dtTime = deltaClock.restart();
-	float dt = dtTime.asSeconds();
-
 	sf::Vector2f spritePos = player.getPosition();
 	sf::Vector2f msgPos = message.getPosition();
 
-	bool playPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P);
-	bool stopPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S);
+	bool playPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)
+						|| sf::Joystick::isButtonPressed(0, 0);
+	bool stopPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)
+					   || sf::Joystick::isButtonPressed(0, 1);
 
-#ifndef OS_SWITCH
-	if(sf::Touch::isDown(1) || (playPressed && !wasPlayPressed))
+	bool soundPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left)
+						|| sf::Joystick::isButtonPressed(0, 2);
+
+	if(playPressed && !wasPlayPressed)
 	{
 		music->play();
 		getLogger().info("Playing music!");
 	}
-	else if(sf::Touch::isDown(2) || (stopPressed && !wasStopPressed))
+	else if(stopPressed && !wasStopPressed)
 	{
 		music->pause();
 		getLogger().info("Stopping music!");
 	}
-#endif
 
-	wasPlayPressed = playPressed;
-	wasStopPressed = stopPressed;
-
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if(soundPressed && !wasSoundPressed)
 	{
-#ifndef OS_SWITCH
 		auto mousePos = sf::Mouse::getPosition(getGame().getWindow());
 		spritePos.x = (float) mousePos.x;
 		spritePos.y = (float) mousePos.y;
 		sound.play();
-#endif
 	}
-	else if(sf::Touch::isDown(0))
-	{
-#ifndef OS_SWITCH
-		auto touchPos = sf::Touch::getPosition(0);
-		spritePos.x = (float) touchPos.x;
-		spritePos.y = (float) touchPos.y;
-		sound.play();
-#endif
-	}
-	else
-	{
-#ifndef OS_SWITCH
-		spritePos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
-		spritePos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
-		msgPos.x += speed * dt * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U);
-		msgPos.y += speed * dt * -sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V);
-#endif
-	}
+
+	wasPlayPressed = playPressed;
+	wasStopPressed = stopPressed;
+	wasSoundPressed = soundPressed;
+
+	spritePos.x += speed * delta * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X);
+	spritePos.y += speed * delta * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y);
+	msgPos.x += speed * delta * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U);
+	msgPos.y += speed * delta * sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::V);
+
+	msgPos.x = std::clamp(msgPos.x, 0.0f, 100.0f);
+	msgPos.y = std::clamp(msgPos.y, 0.0f, 100.0f);
 
 	player.setPosition(spritePos);
 	message.setPosition(msgPos);

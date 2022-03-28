@@ -5,6 +5,7 @@
 #include "TitleScreen.h"
 #include "GameAssets.h"
 #include "HelloSFMLScreen.h"
+#include "SFML/Window/Touch.hpp"
 
 TitleScreen::TitleScreen(wiz::Game& game)
 	: Screen(game) {}
@@ -20,7 +21,7 @@ void TitleScreen::tick(float delta) {
 	vec.y /= static_cast<float>(background.getTextureRect().getSize().y);
 	background.setScale(vec);
 
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(0))
 		getGame().setScreen(std::shared_ptr<HelloSFMLScreen>(new HelloSFMLScreen(getGame())));
 }
 
@@ -35,6 +36,48 @@ void TitleScreen::show() {
 	background.setTexture(*getAssets().get(GameAssets::BACKGROUND));
 
 	getGame().addWindowListener(this);
+
+	int i;
+	for(i = 0; true; i++) {
+		if(!sf::Joystick::isConnected(i))
+			break;
+
+		sf::Joystick::Identification id = sf::Joystick::getIdentification(i);
+		unsigned int buttonCount = sf::Joystick::getButtonCount(i);
+
+		std::stringstream ss;
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::X))
+			ss << "X";
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::Y))
+			ss << "Y";
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::U))
+			ss << "U";
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::V))
+			ss << "V";
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::Z))
+			ss << "Z";
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::R))
+			ss << "R";
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::PovX))
+			ss << "pX";
+
+		if(sf::Joystick::hasAxis(i, sf::Joystick::Axis::PovY))
+			ss << "pY";
+
+		getLogger().info("Found controller, Name: " + id.name +
+					 ", VendorID: " + std::to_string(id.vendorId) +
+					 ", ProductID: " + std::to_string(id.productId) +
+					 ", ButtonCount: " + std::to_string(buttonCount) +
+					 ", Axis: " + ss.str());
+	}
+	getLogger().info("Found " + std::to_string(i) + " controllers");
 }
 
 void TitleScreen::hide() {
