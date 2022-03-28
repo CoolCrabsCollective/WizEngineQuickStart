@@ -70,7 +70,7 @@ ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
-CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags`
+CFLAGS	+=	-D__SWITCH__ -DOS_SWITCH $(INCLUDE) `sdl2-config --cflags`
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=gnu++20
 

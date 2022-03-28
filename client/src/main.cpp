@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include <memory>
 #include <WIZ/logging/MultiLogger.h>
 #include <WIZ/logging/StdOutLogger.h>
@@ -50,7 +49,6 @@ int main(int argc, char* argv[])
 #ifdef OS_UNIX
     logger->info("OS is Unix");
 #endif
-
 
 	sf::VideoMode mode;
 
