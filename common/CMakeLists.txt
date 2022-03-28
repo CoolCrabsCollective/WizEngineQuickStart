@@ -5,9 +5,9 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_common)
 
-set(WizEngine_COMMIT 292533e5810598da48136997ae4e88ada53ade38)
+set(WizEngine_COMMIT master)
 set(SFML_COMMIT 8f6903d00853fd3db395a557733ae65a14f37c01)
-set(SFML_SWITCH_COMMIT f68da1dd1276d1d6392a0208c4d00e3c3331c962)
+set(SFML_SWITCH_COMMIT master)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
