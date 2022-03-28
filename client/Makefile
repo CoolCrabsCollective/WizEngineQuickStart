@@ -83,6 +83,8 @@ LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s -lsfml
 			-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
 			-lWizEngine -lWizEngineQuickStart_common
 
+LIBS	:= $(LIBS) $(LIBS)
+
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
