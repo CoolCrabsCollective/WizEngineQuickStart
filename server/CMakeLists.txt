@@ -26,10 +26,8 @@ endif()
 
 # Fetches SFML dependency and loads its CMakeLists.txt
 include(FetchContent)
-FetchContent_Declare(
-        SFML
-        URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip
-)
+FetchContent_Declare(SFML
+        URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip)
 FetchContent_MakeAvailable(SFML)
 
 # this creates the variables SFML_SOURCE_DIR, SFML_BINARY_DIR and SFML_POPULATED
@@ -37,10 +35,8 @@ FetchContent_MakeAvailable(SFML)
 FetchContent_GetProperties(SFML)
 
 
-FetchContent_Declare(
-	WizEngine
-	URL https://github.com/WheezyWiseWizards/WizEngine/archive/${WizEngine_COMMIT}.zip
-)	
+FetchContent_Declare(WizEngine
+	URL https://github.com/WheezyWiseWizards/WizEngine/archive/${WizEngine_COMMIT}.zip)
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)
 

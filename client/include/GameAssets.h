@@ -27,6 +27,7 @@ namespace GameAssets {
 	ASSET(wiz::TextureAsset, WHITE_PIXEL, ("gfx/white_pixel.png"))
 	ASSET(wiz::TextureAsset, LOGO, ("gfx/logo.png"))
 
+#ifdef SLOW
 	ASSET(FakeAsset, FAKE_ASSET0, ("FakeAsset0"))
 	ASSET(FakeAsset, FAKE_ASSET1, ("FakeAsset1"))
 	ASSET(FakeAsset, FAKE_ASSET2, ("FakeAsset2"))
@@ -136,6 +137,7 @@ namespace GameAssets {
 	ASSET(FakeAsset, FAKE_ASSET97, ("FakeAsset97"))
 	ASSET(FakeAsset, FAKE_ASSET98, ("FakeAsset98"))
 	ASSET(FakeAsset, FAKE_ASSET99, ("FakeAsset99"))
+#endif
 }
 
 

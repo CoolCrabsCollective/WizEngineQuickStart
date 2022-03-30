@@ -7,6 +7,7 @@ project(${PARENT_PROJECT_NAME}_client)
 
 set(WizEngine_COMMIT master)
 set(SFML_COMMIT 8f6903d00853fd3db395a557733ae65a14f37c01)
+set(BOX2D_CMAKE_COMMIT 6cf2fe06fbd7a5b6f37affcbe39a4f3a7063df85)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -27,8 +28,6 @@ elseif(UNIX)
 
     add_compile_definitions(OS_UNIX) # applies C++ macro
 endif()
-
-# Note: os_finder.h ensures OS_SWITCH is defined when no other OS is defined
 
 
 #
@@ -67,24 +66,32 @@ elseif(UNIX)
     endif()
 endif()
 
-# Fetches SFML dependency and loads its CMakeLists.txt
 include(FetchContent)
-FetchContent_Declare(
-        SFML
-        URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip
-)
+
+# Fetches SFML dependency and loads its CMakeLists.txt
+FetchContent_Declare(SFML
+        URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip)
 FetchContent_MakeAvailable(SFML)
 
 # this creates the variables SFML_SOURCE_DIR, SFML_BINARY_DIR and SFML_POPULATED
 # then SFML_SOURCE_DIR is used below to include the header files
 FetchContent_GetProperties(SFML)
 
-FetchContent_Declare(
-        WizEngine
-	    URL https://github.com/WheezyWiseWizards/WizEngine/archive/${WizEngine_COMMIT}.zip
-)
+
+# Fetches WizEngine dependency and loads its CMakeLists.txt
+FetchContent_Declare(WizEngine
+	    GIT_REPOSITORY https://github.com/WheezyWiseWizards/WizEngine.git
+        GIT_TAG ${WizEngine_COMMIT})
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)
+
+
+# Fetches Box2D dependency and loads its CMakeLists.txt
+FetchContent_Declare(Box2D
+        GIT_REPOSITORY https://github.com/tobanteGaming/Box2D-cmake.git
+        GIT_TAG ${BOX2D_CMAKE_COMMIT})
+FetchContent_MakeAvailable(Box2D)
+FetchContent_GetProperties(Box2D)
 
 # Other dependencies
 
@@ -95,7 +102,7 @@ find_package(OpenGL)
 find_package(Threads REQUIRED)
 
 # include and source files
-include_directories(include ${SFML_SOURCE_DIR}/include ${WizEngine_SOURCE_DIR}/include ../common/include)
+include_directories(include ${SFML_SOURCE_DIR}/include ${WizEngine_SOURCE_DIR}/include ${Box2D_SOURCE_DIR}/Box2D/Box2D ../common/include)
 
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -108,7 +115,7 @@ file(GLOB SOURCE_FILES
 add_library(${PARENT_PROJECT_NAME}_libclient STATIC ${SOURCE_FILES})
 add_executable(${PARENT_PROJECT_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${PARENT_PROJECT_NAME} WizEngine ${PARENT_PROJECT_NAME}_common sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+target_link_libraries(${PARENT_PROJECT_NAME} WizEngine ${PARENT_PROJECT_NAME}_common sfml-system sfml-window sfml-graphics sfml-audio sfml-network tobanteGaming::Box2D)
 
 if (UNIX)
     target_link_libraries(${PARENT_PROJECT_NAME} pthread)

@@ -31,8 +31,6 @@ elseif(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
     set(CMAKE_USER_MAKE_RULES_OVERRIDE "${CMAKE_CURRENT_SOURCE_DIR}/cmake/CompilerOptionsOverride.cmake")
 endif()
 
-# Note: os_finder.h ensures OS_SWITCH is defined when no other OS is defined
-
 
 #
 # Set C++ version
@@ -43,15 +41,11 @@ set(CMAKE_CXX_STANDARD 20)
 # Fetches SFML dependency and loads its CMakeLists.txt
 include(FetchContent)
 if(CMAKE_TOOLCHAIN_FILE MATCHES ".*DevkitA64Libnx.cmake")
-    FetchContent_Declare(
-            SFML
-            URL https://github.com/WheezyWiseWizards/SFML-switch/archive/${SFML_SWITCH_COMMIT}.zip
-    )
+    FetchContent_Declare(SFML
+            URL https://github.com/WheezyWiseWizards/SFML-switch/archive/${SFML_SWITCH_COMMIT}.zip)
 else()
-    FetchContent_Declare(
-            SFML
-            URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip
-    )
+    FetchContent_Declare(SFML
+            URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip)
 endif()
 FetchContent_MakeAvailable(SFML)
 
@@ -59,11 +53,8 @@ FetchContent_MakeAvailable(SFML)
 # then SFML_SOURCE_DIR is used below to include the header files
 FetchContent_GetProperties(SFML)
 
-FetchContent_Declare(
-        WizEngine
-        # common/ uses the version defined in either client or server
-        URL https://github.com/WheezyWiseWizards/WizEngine/archive/${WizEngine_COMMIT}.zip
-)
+FetchContent_Declare(WizEngine
+        URL https://github.com/WheezyWiseWizards/WizEngine/archive/${WizEngine_COMMIT}.zip)
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)
 

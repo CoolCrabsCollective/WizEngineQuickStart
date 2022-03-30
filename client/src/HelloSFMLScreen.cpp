@@ -3,13 +3,12 @@
 //
 
 #include "HelloSFMLScreen.h"
-#include "SFML/Graphics/Font.hpp"
 #include "SFML/Window/Touch.hpp"
 #include "SFML/Network/TcpSocket.hpp"
 #include "SFML/Network/IpAddress.hpp"
-#include <sstream>
 #include <string>
 #include <iostream>
+#include "Box2DTestScreen.h"
 
 
 HelloSFMLScreen::HelloSFMLScreen(wiz::Game& game)
