@@ -100,7 +100,6 @@ void HelloSFMLScreen::show() {
 	circle.setPosition(sf::Vector2f(100., 100.));
 	circle.setFillColor(sf::Color::Yellow);
 
-#ifndef OS_SWITCH
 	sf::IpAddress address("localhost");
 	uint16_t port = 2020;
 	sf::Time delay = sf::seconds(1.0f);
@@ -127,8 +126,6 @@ void HelloSFMLScreen::show() {
 			getLogger().info(ss.str());
 		}
 	}
-
-#endif
 
 	getGame().addWindowListener(this);
 }
