@@ -40,6 +40,14 @@ FetchContent_Declare(WizEngine
 FetchContent_MakeAvailable(WizEngine)
 FetchContent_GetProperties(WizEngine)
 
+
+# Fetches Box2D dependency and loads its CMakeLists.txt
+FetchContent_Declare(Box2D
+        GIT_REPOSITORY https://github.com/WheezyWiseWizards/Box2D-cmake.git
+        GIT_TAG ${BOX2D_CMAKE_COMMIT})
+FetchContent_MakeAvailable(Box2D)
+FetchContent_GetProperties(Box2D)
+
 # Other dependencies
 
 add_subdirectory(../common build)
@@ -49,7 +57,11 @@ find_package(OpenGL)
 find_package(Threads REQUIRED)
 
 # include and source files
-include_directories(include ${SFML_SOURCE_DIR}/include ${WizEngine_SOURCE_DIR}/include ../common/include)
+include_directories(include
+        ${SFML_SOURCE_DIR}/include
+        ${WizEngine_SOURCE_DIR}/include
+        ${Box2D_SOURCE_DIR}/Box2D/Box2D
+        ../common/include)
 
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp

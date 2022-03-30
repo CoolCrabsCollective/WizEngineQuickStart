@@ -81,7 +81,7 @@ LIBS	:= 	-lsfml-window-s -lsfml-graphics-s -lsfml-audio-s -lsfml-system-s -lsfml
 			-lFLAC -lvorbisfile -lvorbisenc -lvorbis -logg -lmojoal \
 			-lSDL2 -lnx -lEGL -lglapi -lGLESv2 -lglad \
 			-ldrm_nouveau -ldrm_nouveaud -lfreetype -lbz2 -lpng -lz \
-			-lWizEngine -lWizEngineQuickStart_common
+			-lWizEngine -lWizEngineQuickStart_common -lBox2D
 
 LIBS	:= $(LIBS) $(LIBS)
 

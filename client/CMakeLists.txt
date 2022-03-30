@@ -7,7 +7,7 @@ project(${PARENT_PROJECT_NAME}_client)
 
 set(WizEngine_COMMIT master)
 set(SFML_COMMIT 8f6903d00853fd3db395a557733ae65a14f37c01)
-set(BOX2D_CMAKE_COMMIT 6cf2fe06fbd7a5b6f37affcbe39a4f3a7063df85)
+set(BOX2D_CMAKE_COMMIT master)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -70,7 +70,8 @@ include(FetchContent)
 
 # Fetches SFML dependency and loads its CMakeLists.txt
 FetchContent_Declare(SFML
-        URL https://github.com/SFML/SFML/archive/${SFML_COMMIT}.zip)
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG ${SFML_COMMIT})
 FetchContent_MakeAvailable(SFML)
 
 # this creates the variables SFML_SOURCE_DIR, SFML_BINARY_DIR and SFML_POPULATED
@@ -88,7 +89,7 @@ FetchContent_GetProperties(WizEngine)
 
 # Fetches Box2D dependency and loads its CMakeLists.txt
 FetchContent_Declare(Box2D
-        GIT_REPOSITORY https://github.com/tobanteGaming/Box2D-cmake.git
+        GIT_REPOSITORY https://github.com/WheezyWiseWizards/Box2D-cmake.git
         GIT_TAG ${BOX2D_CMAKE_COMMIT})
 FetchContent_MakeAvailable(Box2D)
 FetchContent_GetProperties(Box2D)
@@ -102,7 +103,10 @@ find_package(OpenGL)
 find_package(Threads REQUIRED)
 
 # include and source files
-include_directories(include ${SFML_SOURCE_DIR}/include ${WizEngine_SOURCE_DIR}/include ${Box2D_SOURCE_DIR}/Box2D/Box2D ../common/include)
+include_directories(include ${SFML_SOURCE_DIR}/include
+        ${WizEngine_SOURCE_DIR}/include
+        ${Box2D_SOURCE_DIR}/Box2D/Box2D
+        ../common/include)
 
 file(GLOB SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -115,7 +119,15 @@ file(GLOB SOURCE_FILES
 add_library(${PARENT_PROJECT_NAME}_libclient STATIC ${SOURCE_FILES})
 add_executable(${PARENT_PROJECT_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${PARENT_PROJECT_NAME} WizEngine ${PARENT_PROJECT_NAME}_common sfml-system sfml-window sfml-graphics sfml-audio sfml-network tobanteGaming::Box2D)
+target_link_libraries(${PARENT_PROJECT_NAME}
+        WizEngine
+        ${PARENT_PROJECT_NAME}_common
+        sfml-system
+        sfml-window
+        sfml-graphics
+        sfml-audio
+        sfml-network
+        WIZ::Box2D)
 
 if (UNIX)
     target_link_libraries(${PARENT_PROJECT_NAME} pthread)
