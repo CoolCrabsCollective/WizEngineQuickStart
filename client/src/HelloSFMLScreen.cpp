@@ -74,9 +74,7 @@ void HelloSFMLScreen::render(sf::RenderTarget& target) {
 	target.draw(background);
 	target.draw(message);
 	target.draw(player);
-#ifndef OS_SWITCH
 	target.draw(circle);
-#endif
 }
 
 void HelloSFMLScreen::show() {

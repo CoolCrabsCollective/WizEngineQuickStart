@@ -31,7 +31,7 @@ void TitleScreen::tick(float delta) {
 	}
 
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Touch::isDown(1))
-		getGame().setScreen(std::shared_ptr<Box2DTestScreen>(new Box2DTestScreen(getGame())));
+		getGame().setScreen(std::shared_ptr<HelloSFMLScreen>(new HelloSFMLScreen(getGame())));
 }
 
 void TitleScreen::render(sf::RenderTarget& target) {
