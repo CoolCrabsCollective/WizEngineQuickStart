@@ -5,3 +5,4 @@ bin/
 build/
 build-switch/
 out/
+server/logs/
