@@ -5,9 +5,10 @@ get_filename_component(PARENT_PROJECT_NAME ${PARENT_PROJECT_PATH} NAME)
 
 project(${PARENT_PROJECT_NAME}_client)
 
-set(WizEngine_COMMIT master)
+set(WizEngine_COMMIT tgui)
 set(SFML_COMMIT 8f6903d00853fd3db395a557733ae65a14f37c01)
 set(BOX2D_CMAKE_COMMIT master)
+set(TGUI_COMMIT v0.9.5)
 
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
     # Not for windows because windres.exe doesn't support those
@@ -93,6 +94,13 @@ FetchContent_Declare(Box2D
         GIT_TAG ${BOX2D_CMAKE_COMMIT})
 FetchContent_MakeAvailable(Box2D)
 FetchContent_GetProperties(Box2D SOURCE_DIR Box2D_SOURCE_DIR)
+
+# Fetches tgui dependency and loads its cmake
+FetchContent_Declare(tgui
+        GIT_REPOSITORY https://github.com/texus/TGUI.git
+        GIT_TAG ${TGUI_COMMIT})
+FetchContent_MakeAvailable(tgui)
+FetchContent_GetProperties(tgui SOURCE_DIR tgui_SOURCE_DIR)
 
 # Other dependencies
 
