@@ -106,6 +106,7 @@ find_package(Threads REQUIRED)
 include_directories(include ${SFML_SOURCE_DIR}/include
         ${WizEngine_SOURCE_DIR}/include
         ${Box2D_SOURCE_DIR}/Box2D/Box2D
+        ${Box2D_SOURCE_DIR}/Box2D
         ../common/include)
 
 file(GLOB SOURCE_FILES
