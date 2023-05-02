@@ -109,13 +109,8 @@ include_directories(include ${SFML_SOURCE_DIR}/include
         ${Box2D_SOURCE_DIR}/Box2D
         ../common/include)
 
-file(GLOB SOURCE_FILES
-        ${PROJECT_SOURCE_DIR}/src/*.cpp
-        ${PROJECT_SOURCE_DIR}/include/*.h
-        ${PROJECT_SOURCE_DIR}/src/*/*.cpp
-        ${PROJECT_SOURCE_DIR}/include/*/*.h
-        ${PROJECT_SOURCE_DIR}/src/*/*/*.cpp
-        ${PROJECT_SOURCE_DIR}/include/*/*/*.h)
+file(GLOB_RECURSE SOURCE_FILES "${PROJECT_SOURCE_DIR}/src/*.cpp" "${PROJECT_SOURCE_DIR}/include/*.h" "${PROJECT_SOURCE_DIR}/include/*.inl" "${PROJECT_SOURCE_DIR}/include/*.hpp")
+
 
 add_library(${PARENT_PROJECT_NAME}_libclient STATIC ${SOURCE_FILES})
 add_executable(${PARENT_PROJECT_NAME} ${SOURCE_FILES})
